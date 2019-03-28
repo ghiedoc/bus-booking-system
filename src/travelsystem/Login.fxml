@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -44,6 +45,21 @@
                      </font>
                   </JFXButton>
                   <JFXButton fx:id="registerBtn" layoutX="328.0" layoutY="239.0" onAction="#handleRegisterBtn" text="Register">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="lblU" layoutX="328.0" layoutY="67.0" text="*" textFill="RED">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblP" layoutX="328.0" layoutY="132.0" text="*" textFill="RED">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="adminBtn" layoutX="40.0" layoutY="239.0" onAction="#handleAdminBtn" text="Admin">
                      <font>
                         <Font size="14.0" />
                      </font>

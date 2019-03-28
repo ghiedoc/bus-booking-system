@@ -49,7 +49,6 @@ public class RegisterController implements Initializable {
     @FXML
     private JFXButton backBtn;
 
-    
     /**
      * Initializes the controller class.
      */
@@ -60,41 +59,44 @@ public class RegisterController implements Initializable {
 
     @FXML
     void handleRegisterBtn(ActionEvent event) {
-        
+
         //gets data from the fields
         String name = nameTxtField.getText();
         String email = emailTxtField.getText();
         String username = usernameTxtField.getText();
         String password = passwordTxtField.getText();
-        
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-            Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
-            String insertQuery = "insert into register_details values(null,'"+name+"', '"+email+"', '"+username+"', '"+password+"')";
-            Statement stat = con.createStatement();
-            int x = stat.executeUpdate(insertQuery);
-            System.out.println(x);
-            if(x == 1){
-                JOptionPane.showMessageDialog(null, "Information added on table");
-            }
-            
+
+        if (name.equals("") || email.equals("") || username.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Incomplete Details!");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
+                Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
+                String insertQuery = "insert into register_details values(null,'" + name + "', '" + email + "', '" + username + "', '" + password + "')";
+                Statement stat = con.createStatement();
+                int x = stat.executeUpdate(insertQuery);
+                System.out.println(x);
+                if (x == 1) {
+                    JOptionPane.showMessageDialog(null, "Information added on table");
+                }
+
                 JOptionPane.showMessageDialog(null, "Successfully Added!");
-                
-            //transition to MainForm    
-            Parent changeToMain = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
-            Scene changeMainScene = new Scene(changeToMain);
-            Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            mainStage.setScene(changeMainScene);
-            mainStage.show();
-            
-        }catch(Exception e){
-            System.out.println(e);
+
+                //transition to MainForm    
+                Parent changeToMain = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
+                Scene changeMainScene = new Scene(changeToMain);
+                Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                mainStage.setScene(changeMainScene);
+                mainStage.show();
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
-        
 
     }
-    
+
     @FXML
     void handleBackBtn(ActionEvent event) throws IOException {
         Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -103,5 +105,5 @@ public class RegisterController implements Initializable {
         mainStage.setScene(changeLoginScene);
         mainStage.show();
     }
-    
+
 }
