@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="418.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="travelsystem.RegisterController">
+   <children>
+      <AnchorPane prefHeight="222.0" prefWidth="424.0">
+         <children>
+            <ImageView fitHeight="222.0" fitWidth="424.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/images/login-head.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="191.0" fitWidth="190.0" layoutX="126.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/images/metroute-white.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="25.0" layoutY="171.0" prefHeight="354.0" prefWidth="378.0" styleClass="card" stylesheets="@../style/style.css">
+         <children>
+            <JFXTextField fx:id="nameTxtField" layoutX="55.0" layoutY="48.0" maxWidth="273.0" minWidth="273.0" prefHeight="31.0" prefWidth="273.0" promptText="Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="emailTxtField" layoutX="55.0" layoutY="101.0" maxWidth="273.0" minWidth="273.0" prefHeight="31.0" prefWidth="273.0" promptText="Email">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="usernameTxtField" layoutX="55.0" layoutY="157.0" maxWidth="273.0" minWidth="273.0" prefHeight="31.0" prefWidth="273.0" promptText="Username">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXPasswordField fx:id="passwordTxtField" layoutX="55.0" layoutY="212.0" maxWidth="273.0" minWidth="273.0" prefHeight="31.0" prefWidth="273.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXPasswordField>
+            <JFXButton fx:id="registerBtn" layoutX="135.0" layoutY="276.0" onAction="#handleRegisterBtn" styleClass="btn-login" stylesheets="@../style/style.css" text="Register" />
+            <JFXButton fx:id="backBtn" layoutX="29.0" layoutY="307.0" onAction="#handleBackBtn" text="Back" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

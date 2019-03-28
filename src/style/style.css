@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03 13, 19, 7:05:45 PM
+    Author     : Gillian
+*/
+
+.card{
+    -fx-background-color: white;
+    -fx-border-radius: 4.0px;
+    -fx-background-radius: 4.0px;
+    -fx-effect: dropshadow(gaussian,rgb(0.0,0.0,0.0,0.15),6.0,0.7,0.0,1.5);
+}
+
+.btn-login{
+    -fx-background-radius: 35px;
+    -fx-border-radius: 35px;
+    -fx-background-color: #5a5a5a;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -jfx-button-type: FLAT;
+    -fx-pref-width: 110px;
+    -fx-pref-height: 25px;
+}
+
+.tab{
+    -fx-background-color: #e62444;
+    -fx-pref-width: 200;
+    -fx-pref-height: 40;
+}
+
+.tab:hover{
+    -fx-background-color: #1f08a1;
+}
+
+.tab:default{
+    -fx-background-color: #e62444;
+}
+
+.tab-header-background{
+    -fx-background-color: #e62444;
+}
+

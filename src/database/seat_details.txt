@@ -1,0 +1,5 @@
+Beside Window,No,Bags,
+Middle,No,Bags,
+Beside Window,No,Suitcase,100.00,
+Middle,No,Suitcase,100.00,
+Middle,No,Bags,50.00,
