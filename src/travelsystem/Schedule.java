@@ -16,13 +16,23 @@ public class Schedule {
     private String bus_destination;
     private String bus_seat;
     private String bus_price;
+    private String bus_type;
 
-    public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price) {
+    public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type) {
         this.bus_no = bus_no;
         this.bus_time = bus_time;
         this.bus_destination = bus_destination;
         this.bus_seat = bus_seat;
         this.bus_price = bus_price;
+        this.bus_type = bus_type;
+    }
+    
+    public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price) {
+        this.bus_no = bus_no;
+        this.bus_time = bus_time;
+        this.bus_destination = bus_destination;
+        this.bus_seat = bus_seat;
+        this.bus_price = bus_price;   
     }
 
     public String getBus_no() {
@@ -63,6 +73,14 @@ public class Schedule {
 
     public void setBus_price(String bus_price) {
         this.bus_price = bus_price;
+    }
+
+    public String getBus_type() {
+        return bus_type;
+    }
+
+    public void setBus_type(String bus_type) {
+        this.bus_type = bus_type;
     }
     
     

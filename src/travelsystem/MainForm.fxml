@@ -121,7 +121,7 @@
                               </AnchorPane>
                               <Separator layoutX="443.0" layoutY="14.0" orientation="VERTICAL" prefHeight="396.0" prefWidth="3.0" />
                               <JFXButton fx:id="okBtn" layoutX="624.0" layoutY="422.0" onAction="#handleOkBtn" prefHeight="31.0" prefWidth="125.0" styleClass="btn-login" text="Show E-Pass" />
-                              <TextArea fx:id="receiptTxtArea" layoutX="501.0" layoutY="14.0" prefHeight="402.0" prefWidth="355.0" />
+                              <TextArea fx:id="receiptTxtArea" layoutX="501.0" layoutY="201.0" prefHeight="215.0" prefWidth="355.0" />
                               <JFXComboBox fx:id="discountCbox" layoutX="195.0" layoutY="258.0" onAction="#handleDiscountCbox" prefHeight="25.0" prefWidth="163.0" />
                               <Label layoutX="87.0" layoutY="261.0" text="Discount Type:">
                                  <font>
@@ -170,6 +170,15 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
+                              <TableView fx:id="tblBook" layoutX="463.0" layoutY="14.0" onMouseClicked="#tblRowClick" prefHeight="151.0" prefWidth="423.0">
+                                <columns>
+                                  <TableColumn fx:id="departureColBook" prefWidth="75.0" text="Departure" />
+                                  <TableColumn fx:id="destinationColBook" prefWidth="169.0" text="Destination" />
+                                    <TableColumn fx:id="seatColBook" prefWidth="41.0" text="Seats" />
+                                    <TableColumn fx:id="typeColBook" prefWidth="69.0" text="Bus Type" />
+                                    <TableColumn fx:id="priceColBook" prefWidth="68.0" text="Price" />
+                                </columns>
+                              </TableView>
                            </children></AnchorPane>
                     </content>
                   </Tab>

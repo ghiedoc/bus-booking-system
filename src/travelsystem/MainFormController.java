@@ -9,7 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -22,7 +22,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -40,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.swing.table.TableModel;
 
 /**
  * FXML Controller class
@@ -156,6 +156,24 @@ public class MainFormController implements Initializable {
     @FXML
     private TableColumn<Destination, String> fromColDestination;
     
+    @FXML
+    private TableView<Schedule> tblBook;
+
+    @FXML
+    private TableColumn<Schedule, String> departureColBook;
+
+    @FXML
+    private TableColumn<Schedule, String> destinationColBook;
+
+    @FXML
+    private TableColumn<Schedule, String> seatColBook;
+
+    @FXML
+    private TableColumn<Schedule, String> typeColBook;
+
+    @FXML
+    private TableColumn<Schedule, String> priceColBook;
+    
     //for table
     ObservableList<Schedule> oblist_schedule = FXCollections.observableArrayList();
     ObservableList<Destination> oblist_destination = FXCollections.observableArrayList();
@@ -186,7 +204,7 @@ public class MainFormController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //table at home tab
         busnumColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
         timeColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
         destinationColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
@@ -194,12 +212,21 @@ public class MainFormController implements Initializable {
         priceColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblSchedule.setItems(oblist_schedule);
         
+        //table at schedule tab
         busNumColTab.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
         departureColTab.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
         destinationColTab.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
         seatsColTab.setCellValueFactory(new PropertyValueFactory<>("bus_seat"));
         priceColTab.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblScheduleTab.setItems(oblist_schedule);
+        
+        //table at book tab
+        departureColBook.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
+        destinationColBook.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
+        seatColBook.setCellValueFactory(new PropertyValueFactory<>("bus_seat"));
+        typeColBook.setCellValueFactory(new PropertyValueFactory<>("bus_type"));
+        priceColBook.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
+        tblBook.setItems(oblist_schedule);
         ////////////////////////////table_schedule////////////////////////////
         
         ////////////////////////////table_destination////////////////////////////
@@ -779,6 +806,11 @@ public class MainFormController implements Initializable {
 //        }else if(discountType.equalsIgnoreCase("PWD/Disable")){
 //            System.out.println(discount);
 //        }
+    }
+    
+    @FXML
+    void tblRowClick(MouseEvent event) {
+        //int row = tblBook.getRowFactory();
     }
 
     @FXML

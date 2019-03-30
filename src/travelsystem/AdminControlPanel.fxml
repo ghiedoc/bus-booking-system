@@ -52,13 +52,8 @@
                   <JFXTextField fx:id="timeField" focusColor="#cd0000" layoutX="112.0" layoutY="126.0" maxWidth="212.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" unFocusColor="#6153ff" />
                   <JFXTextField fx:id="seatNumberField" focusColor="#cd0000" layoutX="460.0" layoutY="39.0" maxWidth="212.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" unFocusColor="#6153ff" />
                   <JFXTextField fx:id="destinationField" focusColor="#cd0000" layoutX="460.0" layoutY="81.0" maxWidth="212.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" unFocusColor="#5f54ff" />
-                  <JFXDatePicker fx:id="datePicker" defaultColor="WHITE" layoutX="462.0" layoutY="126.0" prefHeight="31.0" prefWidth="212.0" />
+                  <JFXDatePicker fx:id="datePicker" defaultColor="BLACK" layoutX="462.0" layoutY="126.0" prefHeight="31.0" prefWidth="212.0" />
                   <Button fx:id="saveBtn" layoutX="577.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="30.0" prefWidth="95.0" text="Save">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="resetBtn" layoutX="577.0" layoutY="278.0" mnemonicParsing="false" onAction="#handleResetBtn" prefHeight="30.0" prefWidth="95.0" text="Reset">
                      <font>
                         <Font size="14.0" />
                      </font>
