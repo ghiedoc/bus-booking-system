@@ -240,7 +240,7 @@ public class MainFormController implements Initializable {
         typeColBook.setCellValueFactory(new PropertyValueFactory<>("bus_type"));
         priceColBook.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblBook.setItems(oblist_schedule);
-        ////////////////////////////table_schedule////////////////////////////
+        //*****************************************************************************************
         
         ////////////////////////////table_destination////////////////////////////
          try {
@@ -259,7 +259,7 @@ public class MainFormController implements Initializable {
         toColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_source"));
         fromColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
         tblDestination.setItems(oblist_destination); 
-        ////////////////////////////table_destination////////////////////////////
+        //*****************************************************************************************
         
         //choose destination text field part
         setCellValueFromTableToField();
@@ -267,15 +267,15 @@ public class MainFormController implements Initializable {
         busTypeFld.setEditable(false);
         busDestiFld.setEditable(false);
         busPriceFld.setEditable(false);
+        //**********************************
         
         //cbox
-//        nboundtravelToCbox.setItems(destination);
-//        nboundtravelFromCbox.setItems(source);
-//        busSourceCBFillData();
-//        busDestinationCBFillData();
-//        busPriceLabelFillData();
+        nboundtravelToCbox.setItems(destination);
+        nboundtravelFromCbox.setItems(source);
+        busSourceCBFillData();
+        busDestinationCBFillData();
+        busPriceLabelFillData();
         
-
         //adding item to position combo box
         seatPositionCbox.getItems().addAll(
                 "Beside Window",
@@ -298,10 +298,11 @@ public class MainFormController implements Initializable {
                 "Senior Citizen",
                 "PWD/Disable"
         );
-
+        
+        //adding item to bus_type
         nbBusTypeCbox.getItems().addAll("Aircon Bus", "Ordinary Bus");
 
-//        //SHOW DATE
+        //SHOW DATE
         Date d = new Date();
         SimpleDateFormat s = new SimpleDateFormat("MM-dd-yyyy");
         homeShowDate.setText(s.format(d));
