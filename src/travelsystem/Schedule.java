@@ -17,6 +17,7 @@ public class Schedule {
     private String bus_seat;
     private String bus_price;
     private String bus_type;
+    private String bus_source;
 
     public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type) {
         this.bus_no = bus_no;
@@ -81,6 +82,14 @@ public class Schedule {
 
     public void setBus_type(String bus_type) {
         this.bus_type = bus_type;
+    }
+
+    public String getBus_source() {
+        return bus_source;
+    }
+
+    public void setBus_source(String bus_source) {
+        this.bus_source = bus_source;
     }
     
     
