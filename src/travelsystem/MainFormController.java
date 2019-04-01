@@ -40,7 +40,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
 /**
  * FXML Controller class
  *
@@ -110,10 +109,10 @@ public class MainFormController implements Initializable {
 
     @FXML
     private JFXButton okBtn;
-    
+
     @FXML
     private TableView<Schedule> tblScheduleTab;
-    
+
     @FXML
     private TableColumn<Schedule, String> busNumColTab;
 
@@ -128,7 +127,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private TableColumn<Schedule, String> priceColTab;
-    
+
     @FXML
     private TableView<Schedule> tblSchedule;
 
@@ -146,7 +145,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private TableColumn<Schedule, String> priceColSchedule;
-    
+
     @FXML
     private TableView<Destination> tblDestination;
 
@@ -155,7 +154,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private TableColumn<Destination, String> fromColDestination;
-    
+
     @FXML
     private TableView<Schedule> tblBook;
 
@@ -173,8 +172,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     private TableColumn<Schedule, String> priceColBook;
-    
-    
+
     @FXML
     private JFXTextField busTimeFld;
 
@@ -186,34 +184,33 @@ public class MainFormController implements Initializable {
 
     @FXML
     private JFXTextField busPriceFld;
-    
+
     //for table
     ObservableList<Schedule> oblist_schedule = FXCollections.observableArrayList();
     ObservableList<Destination> oblist_destination = FXCollections.observableArrayList();
-    
+
     //for combo box
     final ObservableList source = FXCollections.observableArrayList();
     final ObservableList destination = FXCollections.observableArrayList();
-    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         ////////////////////////////table_schedule////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
-            
+
             ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 oblist_schedule.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_time"),
                         rs.getString("bus_destination"), rs.getString("bus_seat"),
-                        rs.getString("bus_price"),rs.getString("bus_type")));
+                        rs.getString("bus_price"), rs.getString("bus_type")));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -224,7 +221,7 @@ public class MainFormController implements Initializable {
         seatColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_seat"));
         priceColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblSchedule.setItems(oblist_schedule);
-        
+
         //table at schedule tab
         busNumColTab.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
         departureColTab.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
@@ -232,7 +229,7 @@ public class MainFormController implements Initializable {
         seatsColTab.setCellValueFactory(new PropertyValueFactory<>("bus_seat"));
         priceColTab.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblScheduleTab.setItems(oblist_schedule);
-        
+
         //table at book tab
         departureColBook.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
         destinationColBook.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
@@ -241,26 +238,26 @@ public class MainFormController implements Initializable {
         priceColBook.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblBook.setItems(oblist_schedule);
         //*****************************************************************************************
-        
+
         ////////////////////////////table_destination////////////////////////////
-         try {
+        try {
             Connection con = DBConnector.getConnection();
-            
+
             ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 oblist_destination.add(new Destination(rs.getString("bus_source"), rs.getString("bus_destination")));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         toColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_source"));
         fromColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
-        tblDestination.setItems(oblist_destination); 
+        tblDestination.setItems(oblist_destination);
         //*****************************************************************************************
-        
+
         //choose destination text field part
         setCellValueFromTableToField();
         busTimeFld.setEditable(false);
@@ -268,14 +265,14 @@ public class MainFormController implements Initializable {
         busDestiFld.setEditable(false);
         busPriceFld.setEditable(false);
         //**********************************
-        
+
         //cbox
         nboundtravelToCbox.setItems(destination);
         nboundtravelFromCbox.setItems(source);
         busSourceCBFillData();
         busDestinationCBFillData();
         busPriceLabelFillData();
-        
+
         //adding item to position combo box
         seatPositionCbox.getItems().addAll(
                 "Beside Window",
@@ -294,11 +291,13 @@ public class MainFormController implements Initializable {
 
         //discount cbox
         discountCbox.getItems().addAll(
+                "None",
                 "Student",
                 "Senior Citizen",
                 "PWD/Disable"
         );
-        
+        discountCbox.getSelectionModel().selectFirst();
+
         //adding item to bus_type
         nbBusTypeCbox.getItems().addAll("Aircon Bus", "Ordinary Bus");
 
@@ -360,7 +359,7 @@ public class MainFormController implements Initializable {
             System.out.println(e);
         }
     }
-    
+
     public void busPriceLabelFillData() {
 
         try {
@@ -374,7 +373,7 @@ public class MainFormController implements Initializable {
             ResultSet rs = stat.executeQuery(selectQuery);
             while (rs.next()) {
                 nboundPriceShow.setText(rs.getString("bus_price"));
-                
+
             }
             stat.close();
             rs.close();
@@ -409,34 +408,52 @@ public class MainFormController implements Initializable {
     @FXML
     void handleOkBtn(ActionEvent event) {
 
+        //DISCOUNT PRICE PROCESS
+        String discount_type = discountCbox.getValue();
+        String total_discount_str = "";
+        double total_discount = 0;
+        double bus_price = 0.00;
+        double luggage_price = Double.parseDouble(seatLuggageShow.getText());
+        
+        if (discount_type.equalsIgnoreCase("Student") || discount_type.equalsIgnoreCase("Senior Citizen")
+                || discount_type.equalsIgnoreCase("PWD/Disable")) {
+            
+            bus_price = Double.parseDouble(busPriceFld.getText());
+            System.out.println("original price: " + bus_price);
+            double discount_rate = bus_price * 0.20;
+            total_discount = bus_price - discount_rate;
+            System.out.println("total disc: " + total_discount);
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            total_discount_str = String.valueOf(formatter.format(total_discount));
+            
+        }else{
+            System.out.println("no discount");
+            bus_price = Double.parseDouble(busPriceFld.getText());
+            System.out.println("price: " + bus_price);
+        }
+        
+        //OVERALL PRICE
+        double overall_price_discounted = total_discount + luggage_price;
+        double overall_price_woutdisc = bus_price + luggage_price;
+
         receiptTxtArea.setText(receiptTxtArea.getText() + "                E-PASS                ");
         receiptTxtArea.setText("-------------------------TRAVEL DETAILS------------------------\n\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "To: \t\t\t\t\t\t" + busDestiFld.getText() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Bus Type: \t\t\t\t" + busTypeFld.getText() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Discount Type: \t\t\t" + discountCbox.getValue() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\t" + busPriceFld.getText() + "\n\n\n");
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\t" + "Php. " + busPriceFld.getText() + ".00" + "\n");
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Discounted Price: \t\t\t" + "Php. " + total_discount_str + "\n\n\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "---------------------------SEAT DETAILS-------------------------\n\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Seat Position: \t\t\t\t" + seatPositionCbox.getValue() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Luggage Type: \t\t\t" + seatLuggageCbox.getValue() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price: ");
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n\n");
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount: Php. " + overall_price_discounted);
+        receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount: Php. " + overall_price_woutdisc);
 
-//        //DISCOUNT TYPE PROCESS
-//        double price = 1;
-//        double discount = price * .20;
-//        String discountType = discountCbox.getValue();
-//        
-//        if(discountType.equalsIgnoreCase("Student")){
-//            System.out.println(discount);
-//        }else if(discountType.equalsIgnoreCase("Senior Citizen")){
-//            System.out.println(discount);
-//        }else if(discountType.equalsIgnoreCase("PWD/Disable")){
-//            System.out.println(discount);
-//        }
     }
-    
-    private void setCellValueFromTableToField(){
-        tblBook.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>(){
+
+    private void setCellValueFromTableToField() {
+        tblBook.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
                 Schedule sched = tblBook.getItems().get(tblBook.getSelectionModel().getSelectedIndex());
@@ -445,10 +462,10 @@ public class MainFormController implements Initializable {
                 busDestiFld.setText(sched.getBus_destination());
                 busPriceFld.setText(sched.getBus_price());
             }
-            
+
         });
     }
-    
+
     @FXML
     void handleSignOutBtn(ActionEvent event) throws IOException {
         Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -462,7 +479,7 @@ public class MainFormController implements Initializable {
     void handleNboundTravelFromCbox(ActionEvent event) {
 
     }
-    
+
     @FXML
     void handlleNboundTravelToCbox(ActionEvent event) {
 
@@ -477,7 +494,5 @@ public class MainFormController implements Initializable {
     void handleDiscountCbox(ActionEvent event) {
 
     }
-
-    
 
 }
