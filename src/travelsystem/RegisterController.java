@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -70,9 +69,7 @@ public class RegisterController implements Initializable {
             JOptionPane.showMessageDialog(null, "Incomplete Details!");
         } else {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-                Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
+                Connection con = DBConnector.getConnection();
                 String insertQuery = "insert into register_details values(null,'" + name + "', '" + email + "', '" + username + "', '" + password + "')";
                 Statement stat = con.createStatement();
                 int x = stat.executeUpdate(insertQuery);

@@ -73,9 +73,7 @@ public class LoginController implements Initializable {
             lblP.setVisible(true);
         } else {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-                Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
+                Connection con = (Connection) DBConnector.getConnection();
                 PreparedStatement ps;
                 ps = con.prepareStatement("SELECT * FROM register_details WHERE username = ? AND password = ?");
                 ps.setString(1, usernameTxtField.getText());

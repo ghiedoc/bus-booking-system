@@ -96,39 +96,40 @@ public class AdminControlPanelController implements Initializable {
         String bus_source = sourceField.getText();
         String bus_desti = destinationField.getText();
         String bus_time = timeField.getText();
-        //date
-//        LocalDate departD = dateDepart.getValue();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        String departDate = dateFormat.format(departD);
+        String bus_date = datePicker.getValue().toString();      
         String bus_price = priceField.getText();
         //combo box
         String bus_type = typeBusCbox.getValue();
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-            com.mysql.jdbc.Connection con = (com.mysql.jdbc.Connection) DriverManager.getConnection(databaseURL, "root", "");
-            Statement stat = con.createStatement();
-            String selectQuery = "SELECT * FROM bus_details WHERE bus_no = '" + bus_no + "'";
+        if (bus_no.equals("") || bus_seat.equals("") || bus_source.equals("") || bus_desti.equals("") || bus_time.equals("")
+                || bus_type.equals("") || bus_price.equals("")) {
+            JOptionPane.showMessageDialog(null, "There are empty fields!");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
+                com.mysql.jdbc.Connection con = (com.mysql.jdbc.Connection) DriverManager.getConnection(databaseURL, "root", "");
+                Statement stat = con.createStatement();
+                String selectQuery = "SELECT * FROM bus_details WHERE bus_no = '" + bus_no + "'";
 
-            ResultSet rs = stat.executeQuery(selectQuery);
+                ResultSet rs = stat.executeQuery(selectQuery);
 
-            if (rs.next() == true) {
+                if (rs.next() == true) {
 
-                JOptionPane.showMessageDialog(null, "Already added that details!");
-                clearFieldValue();
+                    JOptionPane.showMessageDialog(null, "Already added that details!");
+                    clearFieldValue();
 
-            } else {
-                String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
-                        + " '" + bus_desti + "', '" + bus_time + "', '" + bus_type + "', '" + bus_price + "')";
-                stat.executeUpdate(insertQuery);
-                JOptionPane.showMessageDialog(null, "Bus Details Added!");
-                clearFieldValue();
+                } else {
+                    String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
+                            + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
+                    stat.executeUpdate(insertQuery);
+                    JOptionPane.showMessageDialog(null, "Bus Details Added!");
+                    clearFieldValue();
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
             }
-
-
-        } catch (Exception e) {
-            System.out.println(e);
         }
 
     }
@@ -143,11 +144,9 @@ public class AdminControlPanelController implements Initializable {
         mainStage.show();
 
     }
-    
-    @FXML
-    void handleResetBtn(ActionEvent event){
 
-        
+    @FXML
+    void handleResetBtn(ActionEvent event) {
 
     }
 

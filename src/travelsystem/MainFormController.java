@@ -193,6 +193,7 @@ public class MainFormController implements Initializable {
     final ObservableList source = FXCollections.observableArrayList();
     final ObservableList destination = FXCollections.observableArrayList();
 
+    
     /**
      * Initializes the controller class.
      */
@@ -202,7 +203,6 @@ public class MainFormController implements Initializable {
         ////////////////////////////table_schedule////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
-
             ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
 
             while (rs.next()) {
@@ -316,15 +316,14 @@ public class MainFormController implements Initializable {
 //                homeShowTime.setText(s.format(d));
 //            }
 //        }).start();
+
+        usernameShow.setText("");
     }
 
     public void busSourceCBFillData() {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-            Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
-
+            Connection con = DBConnector.getConnection();
             Statement stat = con.createStatement();
             String selectQuery = "select bus_source from bus_details";
 
@@ -342,10 +341,7 @@ public class MainFormController implements Initializable {
     public void busDestinationCBFillData() {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-            Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
-
+            Connection con = DBConnector.getConnection();
             Statement stat = con.createStatement();
             String selectQuery = "select bus_destination from bus_details";
 
@@ -363,10 +359,7 @@ public class MainFormController implements Initializable {
     public void busPriceLabelFillData() {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-            Connection con = (Connection) DriverManager.getConnection(databaseURL, "root", "");
-
+            Connection con = DBConnector.getConnection();
             Statement stat = con.createStatement();
             String selectQuery = "select bus_price from bus_details";
 
