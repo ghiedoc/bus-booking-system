@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelsystem;
+package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -12,8 +12,10 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +46,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -54,120 +57,74 @@ public class MainFormController implements Initializable {
 
     @FXML
     private JFXTabPane tabPane;
-
     @FXML
     private JFXComboBox<String> seatLuggageCbox;
-
-    @FXML
-    private JFXTextField nboundNoOfTicketsTxtField;
-
-    @FXML
-    private Label nboundPriceShow;
-
     @FXML
     private Label seatLuggageShow;
-
     @FXML
     private Label usernameShow;
-
     @FXML
     private Label homeShowDate;
-
     @FXML
     private Label homeShowTime;
-
     @FXML
     private JFXComboBox<String> discountCbox;
-
     @FXML
     private TextArea receiptTxtArea;
-
     @FXML
     private JFXButton signOutBtn;
-
     @FXML
     private JFXButton okBtn;
-
-    @FXML
-    private TableColumn<Schedule, String> busNumColTab;
-
-    @FXML
-    private TableColumn<Schedule, String> departureColTab;
-
-    @FXML
-    private TableColumn<Schedule, String> destinationColTab;
-
-    @FXML
-    private TableColumn<Schedule, String> seatsColTab;
-
-    @FXML
-    private TableColumn<Schedule, String> priceColTab;
-
     @FXML
     private TableView<Schedule> tblSchedule;
-
     @FXML
     private TableColumn<Schedule, String> busnumColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> timeColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> destinationColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> seatColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> priceColSchedule;
-
     @FXML
     private TableView<Destination> tblDestination;
-
     @FXML
     private TableColumn<Destination, String> toColDestination;
-
     @FXML
     private TableColumn<Destination, String> fromColDestination;
-
     @FXML
     private TableView<Schedule> tblBook;
-
     @FXML
     private TableColumn<Schedule, String> departureColBook;
-
     @FXML
     private TableColumn<Schedule, String> destinationColBook;
-
     @FXML
     private TableColumn<Schedule, String> seatColBook;
-
     @FXML
     private TableColumn<Schedule, String> typeColBook;
-
     @FXML
     private TableColumn<Schedule, String> priceColBook;
-
     @FXML
     private JFXTextField busTimeFld;
-
     @FXML
     private JFXTextField busTypeFld;
-
     @FXML
     private JFXTextField busDestiFld;
-
     @FXML
     private JFXTextField busPriceFld;
-
     @FXML
     private Tab epassTab;
-
     @FXML
     private JFXTextField busNumberFld;
-
     @FXML
     private JFXTextField busDateFld;
+    @FXML
+    private JFXTextField availSeatFld;
+    @FXML
+    private JFXTextField reserveSeatFld;
+    @FXML
+    private JFXTextField nameReserveFld;
 
     //for table
     ObservableList<Schedule> oblist_schedule = FXCollections.observableArrayList();
@@ -234,7 +191,7 @@ public class MainFormController implements Initializable {
         tblDestination.setItems(oblist_destination);
         //*****************************************************************************************
 
-        //choose destination text field part
+        //choose destination text field part set to not editable so users don't modify it.
         setCellValueFromTableToField();
         busNumberFld.setEditable(false);
         busDateFld.setEditable(false);
@@ -242,6 +199,7 @@ public class MainFormController implements Initializable {
         busTypeFld.setEditable(false);
         busDestiFld.setEditable(false);
         busPriceFld.setEditable(false);
+        availSeatFld.setEditable(false);
         //**********************************
 
         //adding item to luggage combo box
@@ -263,6 +221,7 @@ public class MainFormController implements Initializable {
         //usernameShow.setText("");
         showDate();
         showTime();
+
     }
 
     void showDate() {
@@ -312,6 +271,37 @@ public class MainFormController implements Initializable {
     @FXML
     void handleOkBtn(ActionEvent event) {
 
+        //SEAT RESERVATION PROCESS
+        String bus_no = busNumberFld.getText();
+        String username = nameReserveFld.getText();
+        int reserve_seat_num = Integer.parseInt(reserveSeatFld.getText());
+        int avail_seat_num = Integer.parseInt(availSeatFld.getText());
+        int remaining_seat = avail_seat_num - reserve_seat_num;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bussystem", "root", "");
+            Statement stat = con.createStatement();
+            String select = "select * from bus_booking where bus_no ='" + bus_no + "'";
+            ResultSet rs = stat.executeQuery(select);
+
+            String insert = "insert into bus_booking values('" + bus_no + "','" + reserveSeatFld.getText() + "','" + username + "')";
+            int i = stat.executeUpdate(insert);
+
+            if (i == 1) {
+                if (remaining_seat != 0) {
+                    String updateQuery = "update bus_details set bus_seat='" + remaining_seat + "' where bus_no='" + bus_no + "'";
+                    stat.executeUpdate(updateQuery);
+                    JOptionPane.showMessageDialog(null, "Bus seat updated");
+                } else {
+                    JOptionPane.showMessageDialog(null, "There are no more availble seat");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //DISCOUNT PRICE PROCESS
         String discount_type = discountCbox.getValue();
         String total_discount_str = "";
@@ -354,8 +344,8 @@ public class MainFormController implements Initializable {
         receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\t" + "Php. " + busPriceFld.getText() + ".00" + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Discounted Price: \t\t\t" + "Php. " + total_discount_str + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount: Php. " + overall_price_discounted);
-        receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount: Php. " + overall_price_woutdisc);
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount:\t Php. " + overall_price_discounted);
+        receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount:  Php. " + overall_price_woutdisc);
 
     }
 
@@ -370,6 +360,7 @@ public class MainFormController implements Initializable {
                 busTypeFld.setText(sched.getBus_type());
                 busDestiFld.setText(sched.getBus_destination());
                 busPriceFld.setText(sched.getBus_price());
+                availSeatFld.setText(sched.getBus_seat());
 
             }
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelsystem;
+package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -22,69 +22,62 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
+ * FXML Controller class
  *
  * @author Gillian
  */
-public class LoginController implements Initializable {
+public class AdminController implements Initializable {
 
     @FXML
-    private JFXTextField usernameTxtField;
-
+    private JFXTextField unameField;
     @FXML
-    private JFXPasswordField passwordTxtField;
-
+    private JFXPasswordField passwordField;
     @FXML
-    private JFXButton loginBtn;
-
+    private Button loginBtn;
     @FXML
-    private JFXButton registerBtn;
-    
-    @FXML
-    private JFXButton adminBtn;
-    
+    private JFXButton backBtn;
     @FXML
     private Label lblU;
-
     @FXML
     private Label lblP;
 
-    int attempts = 3;
-
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblU.setVisible(false);
         lblP.setVisible(false);
-
     }
 
     @FXML
-    void handleLoginBtn(ActionEvent event) throws IOException {
-
-        if (usernameTxtField.getText().equals("")) {
+    void handleAdminBtn(ActionEvent event) {
+        if (unameField.getText().equals("")) {
             lblU.setVisible(true);
         }
-        if (passwordTxtField.getText().equals("")) {
+        if (passwordField.getText().equals("")) {
             lblP.setVisible(true);
         } else {
             try {
                 Connection con = (Connection) DBConnector.getConnection();
                 PreparedStatement ps;
-                ps = con.prepareStatement("SELECT * FROM register_details WHERE username = ? AND password = ?");
-                ps.setString(1, usernameTxtField.getText());
-                ps.setString(2, passwordTxtField.getText());
+                ps = con.prepareStatement("SELECT * FROM admin_details WHERE username = ? AND password = ?");
+                ps.setString(1, unameField.getText());
+                ps.setString(2, passwordField.getText());
 
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    Parent changeToReg = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
-                    Scene changeRegScene = new Scene(changeToReg);
+                    Parent changeToAcp = FXMLLoader.load(getClass().getResource("AdminControlPanel.fxml"));
+                    Scene changeAdminScene = new Scene(changeToAcp);
                     Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    mainStage.setScene(changeRegScene);
+                    mainStage.setScene(changeAdminScene);
                     mainStage.show();
 
                     JOptionPane.showMessageDialog(null, "Successfully logged in!");
@@ -95,25 +88,14 @@ public class LoginController implements Initializable {
                 System.out.println(e);
             }
         }
-
     }
 
     @FXML
-    void handleRegisterBtn(ActionEvent event) throws IOException {
-
-        Parent changeToMain = FXMLLoader.load(getClass().getResource("Register.fxml"));
-        Scene changeMainScene = new Scene(changeToMain);
+    void handleBackBtn(ActionEvent event) throws IOException {
+        Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Scene changeRegScene = new Scene(changeToLogin);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        mainStage.setScene(changeMainScene);
-        mainStage.show();
-    }
-    
-    @FXML
-    void handleAdminBtn(ActionEvent event) throws IOException {
-        Parent changeToAdmin = FXMLLoader.load(getClass().getResource("Admin.fxml"));
-        Scene changeLoginScene = new Scene(changeToAdmin);
-        Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        mainStage.setScene(changeLoginScene);
+        mainStage.setScene(changeRegScene);
         mainStage.show();
     }
 

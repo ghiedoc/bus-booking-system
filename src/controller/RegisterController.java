@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelsystem;
+package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -32,19 +32,14 @@ public class RegisterController implements Initializable {
 
     @FXML
     private JFXTextField nameTxtField;
-
     @FXML
     private JFXTextField emailTxtField;
-
     @FXML
     private JFXTextField usernameTxtField;
-
     @FXML
     private JFXPasswordField passwordTxtField;
-
     @FXML
     private JFXButton registerBtn;
-
     @FXML
     private JFXButton backBtn;
 

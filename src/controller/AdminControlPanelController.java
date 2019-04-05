@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelsystem;
+package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.NumberValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -29,9 +30,12 @@ import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,63 +60,48 @@ public class AdminControlPanelController implements Initializable {
 
     @FXML
     private Label showDate;
-
     @FXML
     private Label showTime;
-
     @FXML
     private JFXTextField busNumberField;
-
     @FXML
     private JFXTextField sourceField;
-
     @FXML
     private JFXTextField timeField;
-
     @FXML
     private JFXTextField seatNumberField;
-
     @FXML
     private JFXTextField destinationField;
-
     @FXML
     private JFXDatePicker datePicker;
-
     @FXML
     private Button saveBtn;
-
     @FXML
     private JFXComboBox<String> typeBusCbox;
-
     @FXML
     private JFXTextField priceField;
-
     @FXML
     private JFXTextField adminFld;
-
     @FXML
     private JFXButton newAdminBtn;
-
     @FXML
     private JFXPasswordField passwordFld;
-
     @FXML
     private TableView<AdminList> tblListAdmins;
-
     @FXML
     private TableColumn<AdminList, String> admInNameCol;
-
     @FXML
     private TableColumn<AdminList, String> adminUserCol;
-
     @FXML
     private Button signOutBtn;
-
     @FXML
     private JFXTextField nameFld;
+    @FXML
+    private Button deleteBtn;
 
     //for table
     ObservableList<AdminList> admin_list = FXCollections.observableArrayList();
+    
 
     /**
      * Initializes the controller class.
@@ -123,8 +112,7 @@ public class AdminControlPanelController implements Initializable {
         sourceField.setText("PITX");
         sourceField.setEditable(false);
 
-        typeBusCbox.getItems().addAll("Aircon Bus",
-                "Ordinary Bus");
+        typeBusCbox.getItems().addAll("Aircon Bus", "Ordinary Bus");
         typeBusCbox.getSelectionModel().selectFirst();
 
         datePicker.setValue(LocalDate.now());
@@ -148,6 +136,23 @@ public class AdminControlPanelController implements Initializable {
         admInNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         adminUserCol.setCellValueFactory(new PropertyValueFactory<>("admin"));
         tblListAdmins.setItems(admin_list);
+
+        //number validator
+        NumberValidator numVali = new NumberValidator();
+        priceField.getValidators().add(numVali);
+
+        numVali.setMessage("Only numbers are allowed");
+
+        priceField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    priceField.validate();
+                }
+            }
+        });
+
+        setCellValueFromTableToField();
     }
 
     void showDate() {
@@ -203,13 +208,11 @@ public class AdminControlPanelController implements Initializable {
                 //String selectQuery = "SELECT * FROM bus_details WHERE bus_no = '" + bus_no + "'";
                 //ResultSet rs = stat.executeQuery(selectQuery);
 
-                
-                    String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
-                            + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
-                    stat.executeUpdate(insertQuery);
-                    JOptionPane.showMessageDialog(null, "Bus Details Added!");
-                    clearFieldValue();
-                
+                String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
+                        + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
+                stat.executeUpdate(insertQuery);
+                JOptionPane.showMessageDialog(null, "Bus Details Added!");
+                clearFieldValue();
 
             } catch (Exception e) {
                 System.out.println(e);
@@ -235,7 +238,10 @@ public class AdminControlPanelController implements Initializable {
                 System.out.println(x);
                 if (x == 1) {
                     JOptionPane.showMessageDialog(null, "Successfully Added!");
+                    
                 }
+               refreshTable();
+               adminClearField();
 
             } catch (Exception e) {
                 System.out.println(e);
@@ -255,9 +261,63 @@ public class AdminControlPanelController implements Initializable {
 
     }
 
-    @FXML
-    void handleResetBtn(ActionEvent event) {
+    private void setCellValueFromTableToField() {
+        tblListAdmins.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                AdminList al = tblListAdmins.getItems().get(tblListAdmins.getSelectionModel().getSelectedIndex());
+                nameFld.setText(al.getName());
+                adminFld.setText(al.getAdmin());
+            }
 
+        });
+    }
+
+    public void deleteAdmin() {
+        String name = nameFld.getText();
+
+        try {
+            String sql = "delete from `admin_details` where name = ?";
+
+            Connection con = DBConnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Removed Successfully!");
+            refreshTable();
+            
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void refreshTable() {    
+        
+        admin_list.clear();
+        try{
+            String query = "select * from admin_details";
+            PreparedStatement ps;
+            Connection con = DBConnector.getConnection();
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                admin_list.add(new AdminList(rs.getString("name"), rs.getString("username")));
+            }
+            tblListAdmins.setItems(admin_list);
+            ps.close();
+            rs.close();
+        }catch(Exception e){
+            
+        }
+
+    }
+    
+    public void adminClearField(){
+        nameFld.setText("");
+        adminFld.setText("");
+        passwordFld.setText("");
     }
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package travelsystem;
+package controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,6 @@ public class TravelSystem extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //AnchorPane root = (AnchorPane) FXMLLoader.load(Main.class.getResource("/travelsystem/Login.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
