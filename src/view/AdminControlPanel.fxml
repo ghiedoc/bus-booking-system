@@ -11,6 +11,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -111,18 +112,25 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="tblBusDetails" layoutX="12.0" layoutY="11.0" prefHeight="255.0" prefWidth="699.0">
+                              <TableView fx:id="tblBusDetails" layoutX="3.0" layoutY="11.0" prefHeight="255.0" prefWidth="717.0">
                                  <columns>
                                     <TableColumn fx:id="busNumCol" prefWidth="83.0" text="Bus No." />
                                     <TableColumn fx:id="destiCol" prefWidth="173.0" text="Destination" />
-                                    <TableColumn fx:id="sourceCol" prefWidth="69.0" text="Source" />
-                                    <TableColumn fx:id="timeCol" prefWidth="81.0" text="Depart. Time" />
-                                    <TableColumn fx:id="dateCol" text="Depart. Date" />
-                                    <TableColumn fx:id="typeCol" prefWidth="91.0" text="Bus Type" />
-                                    <TableColumn fx:id="seatCol" prefWidth="75.0" text="Avail. Seats" />
-                                    <TableColumn fx:id="priceCol" prefWidth="46.0" text="Price" />
+                                    <TableColumn fx:id="sourceCol" prefWidth="95.666748046875" text="Source" />
+                                    <TableColumn fx:id="timeCol" prefWidth="78.333251953125" text="Depart. Time" />
+                                    <TableColumn fx:id="dateCol" prefWidth="81.666748046875" text="Depart. Date" />
+                                    <TableColumn fx:id="typeCol" prefWidth="90.333251953125" text="Bus Type" />
+                                    <TableColumn fx:id="seatCol" prefWidth="70.666748046875" text="Avail. Seats" />
+                                    <TableColumn fx:id="priceCol" prefWidth="45.33349609375" text="Price" />
                                  </columns>
                               </TableView>
+                              <Button fx:id="busDelete" layoutX="423.0" layoutY="269.0" mnemonicParsing="false" onAction="#deleteBusDetail" prefHeight="25.0" prefWidth="89.0" text="Delete" />
+                              <TextField fx:id="busNoFld" layoutX="268.0" layoutY="270.0" />
+                              <Label layoutX="213.0" layoutY="273.0" text="Bus No." textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                     </content>

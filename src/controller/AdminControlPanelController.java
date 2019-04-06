@@ -46,6 +46,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -116,10 +117,15 @@ public class AdminControlPanelController implements Initializable {
     private TableColumn<Schedule, String> seatCol;
     @FXML
     private TableColumn<Schedule, String> priceCol;
+    @FXML
+    private Button busDelete;
     
     //for table
     ObservableList<AdminList> admin_list = FXCollections.observableArrayList();
     ObservableList<Schedule> bus_details = FXCollections.observableArrayList();
+    @FXML
+    private TextField busNoFld;
+    
     
 
     /**
@@ -130,6 +136,7 @@ public class AdminControlPanelController implements Initializable {
         // TODO
         sourceField.setText("PITX");
         sourceField.setEditable(false);
+        busNoFld.setEditable(false);
 
         typeBusCbox.getItems().addAll("Aircon Bus", "Ordinary Bus");
         typeBusCbox.getSelectionModel().selectFirst();
@@ -197,8 +204,10 @@ public class AdminControlPanelController implements Initializable {
                 }
             }
         });
-
+        
+        //fetch data from table into field
         setCellValueFromTableToField();
+        setCellValueFromTableToFieldBusNo();
     }
 
     void showDate() {
@@ -303,7 +312,8 @@ public class AdminControlPanelController implements Initializable {
         mainStage.show();
 
     }
-
+    
+    //fetch data from table to field
     private void setCellValueFromTableToField() {
         tblListAdmins.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
@@ -313,6 +323,16 @@ public class AdminControlPanelController implements Initializable {
                 adminFld.setText(al.getAdmin());
             }
 
+        });
+    }
+    
+    private void setCellValueFromTableToFieldBusNo(){
+        tblBusDetails.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                Schedule sched = tblBusDetails.getItems().get(tblBusDetails.getSelectionModel().getSelectedIndex());
+                busNoFld.setText(sched.getBus_no());
+            }
         });
     }
 
@@ -335,15 +355,35 @@ public class AdminControlPanelController implements Initializable {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
+    
+    @FXML
+    public void deleteBusDetail(){
+        String bus_no = busNoFld.getText();
+        try {
+            String sql = "delete from `bus_details` where bus_no = ?";
+
+            Connection con = DBConnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, bus_no);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Removed Successfully!");
+            //refreshBusTable();
+            
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 
     public void refreshTable() {    
         
         admin_list.clear();
+            
         try{
-            String query = "select * from admin_details";
+            String admin_query = "select * from admin_details";
             PreparedStatement ps;
             Connection con = DBConnector.getConnection();
-            ps = con.prepareStatement(query);
+            ps = con.prepareStatement(admin_query);
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
@@ -352,6 +392,32 @@ public class AdminControlPanelController implements Initializable {
             tblListAdmins.setItems(admin_list);
             ps.close();
             rs.close();
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }      
+    }
+    
+    //problem here
+    public void refreshBusTable(){
+        bus_details.clear();
+                      
+        try{
+            String bus_query = "select * from bus_details";
+            PreparedStatement ps;
+            Connection con = DBConnector.getConnection();
+            ps = con.prepareStatement(bus_query);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                bus_details.add(new Schedule(rs.getString("bus_no"),rs.getString("bus_destination"),
+                        rs.getString("bus_source"),rs.getString("bus_time"),rs.getString("bus_date"),
+                        rs.getString("bus_type"),rs.getString("bus_seat"),rs.getString("bus_price")));
+            }
+            tblBusDetails.setItems(bus_details);
+            ps.close();
+            rs.close();
+            
         }catch(Exception e){
             System.out.println(e);
         }

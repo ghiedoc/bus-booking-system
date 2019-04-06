@@ -57,108 +57,72 @@ public class MainFormController implements Initializable {
 
     @FXML
     private JFXTabPane tabPane;
-
     @FXML
     private JFXComboBox<String> seatLuggageCbox;
-
-
     @FXML
     private Label seatLuggageShow;
-
     @FXML
     private Label usernameShow;
-
     @FXML
     private Label homeShowDate;
-
     @FXML
     private Label homeShowTime;
-
     @FXML
     private JFXComboBox<String> discountCbox;
-
     @FXML
     private TextArea receiptTxtArea;
-
     @FXML
     private JFXButton signOutBtn;
-
     @FXML
     private JFXButton okBtn;
-
-
     @FXML
     private TableView<Schedule> tblSchedule;
-
     @FXML
     private TableColumn<Schedule, String> busnumColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> timeColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> destinationColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> seatColSchedule;
-
     @FXML
     private TableColumn<Schedule, String> priceColSchedule;
-
     @FXML
     private TableView<Destination> tblDestination;
-
     @FXML
     private TableColumn<Destination, String> toColDestination;
-
     @FXML
     private TableColumn<Destination, String> fromColDestination;
-
     @FXML
     private TableView<Schedule> tblBook;
-
     @FXML
     private TableColumn<Schedule, String> departureColBook;
-
     @FXML
     private TableColumn<Schedule, String> destinationColBook;
-
     @FXML
     private TableColumn<Schedule, String> seatColBook;
-
     @FXML
     private TableColumn<Schedule, String> typeColBook;
-
     @FXML
     private TableColumn<Schedule, String> priceColBook;
-
     @FXML
     private JFXTextField busTimeFld;
-
     @FXML
     private JFXTextField busTypeFld;
-
     @FXML
     private JFXTextField busDestiFld;
-
     @FXML
     private JFXTextField busPriceFld;
-
     @FXML
     private Tab epassTab;
-
     @FXML
     private JFXTextField busNumberFld;
-
     @FXML
     private JFXTextField busDateFld;
-
     @FXML
     private JFXTextField availSeatFld;
-
     @FXML
     private JFXTextField reserveSeatFld;
-
     @FXML
     private JFXTextField nameReserveFld;
 
@@ -175,7 +139,10 @@ public class MainFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        reserveSeatFld.setText("1");
+        reserveSeatFld.setEditable(false);
+        
         ////////////////////////////table_schedule////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
@@ -343,7 +310,8 @@ public class MainFormController implements Initializable {
         String discount_type = discountCbox.getValue();
         String total_discount_str = "";
         double total_discount = 0;
-        double bus_price = 0.00;
+        double bus_price = 0;
+        //double total_price = bus_price * reserve_seat_num;
         double luggage_price = Double.parseDouble(seatLuggageShow.getText());
         
 
@@ -375,6 +343,7 @@ public class MainFormController implements Initializable {
         receiptTxtArea.setText(receiptTxtArea.getText() + "Boarding Time: \t\t\t\t" + busTimeFld.getText() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "From: \t\t\t\t\t\tPITX" + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "To: \t\t\t\t\t\t\t" + busDestiFld.getText() + "\n");
+        receiptTxtArea.setText(receiptTxtArea.getText() + "Seat Reserve: \t\t\t\t\t" + reserveSeatFld.getText() + " reservation for " + nameReserveFld.getText() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Additional Service: \t\t\t\t" + seatLuggageCbox.getValue() + "\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Discount Type: \t\t\t\t" + discountCbox.getValue() + "\n");
 
@@ -407,7 +376,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     void handleSignOutBtn(ActionEvent event) throws IOException {
-        Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent changeToLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         Scene changeLoginScene = new Scene(changeToLogin);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeLoginScene);

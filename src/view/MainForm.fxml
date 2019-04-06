@@ -216,7 +216,7 @@
                               </Label>
                               <AnchorPane layoutX="467.0" layoutY="272.0" prefHeight="138.0" prefWidth="424.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="60.0" layoutY="40.0" text="Seat/s to Reserve:">
+                                    <Label layoutX="75.0" layoutY="40.0" text="Reserve 1 seat:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -228,6 +228,11 @@
                                     </Label>
                                     <JFXTextField fx:id="reserveSeatFld" focusColor="#ea3b3b" layoutX="178.0" layoutY="35.0" />
                                     <JFXTextField fx:id="nameReserveFld" focusColor="#ea3b3b" layoutX="178.0" layoutY="72.0" />
+                                    <Label layoutX="101.0" layoutY="14.0" text="Note: Only one (1) seat per reservation." textFill="#d71b1b">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
