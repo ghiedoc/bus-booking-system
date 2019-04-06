@@ -218,7 +218,6 @@ public class AdminControlPanelController implements Initializable {
                 System.out.println(e);
             }
         }
-
     }
 
     @FXML
@@ -238,7 +237,6 @@ public class AdminControlPanelController implements Initializable {
                 System.out.println(x);
                 if (x == 1) {
                     JOptionPane.showMessageDialog(null, "Successfully Added!");
-                    
                 }
                refreshTable();
                adminClearField();
@@ -247,7 +245,6 @@ public class AdminControlPanelController implements Initializable {
                 System.out.println(e);
             }
         }
-
     }
 
     @FXML
@@ -309,9 +306,8 @@ public class AdminControlPanelController implements Initializable {
             ps.close();
             rs.close();
         }catch(Exception e){
-            
+            System.out.println(e);
         }
-
     }
     
     public void adminClearField(){

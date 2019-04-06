@@ -59,6 +59,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void handleAdminBtn(ActionEvent event) {
+        //logging as admin
         if (unameField.getText().equals("")) {
             lblU.setVisible(true);
         }
@@ -68,7 +69,7 @@ public class AdminController implements Initializable {
             try {
                 Connection con = (Connection) DBConnector.getConnection();
                 PreparedStatement ps;
-                ps = con.prepareStatement("SELECT * FROM admin_details WHERE username = ? AND password = ?");
+                ps = con.prepareStatement("select * from admin_details where username = ? and password = ?");
                 ps.setString(1, unameField.getText());
                 ps.setString(2, passwordField.getText());
 

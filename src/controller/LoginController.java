@@ -46,8 +46,7 @@ public class LoginController implements Initializable {
     @FXML
     
     private Label lblP;
-    int attempts = 3;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

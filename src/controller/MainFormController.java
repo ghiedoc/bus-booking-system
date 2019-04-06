@@ -57,72 +57,108 @@ public class MainFormController implements Initializable {
 
     @FXML
     private JFXTabPane tabPane;
+
     @FXML
     private JFXComboBox<String> seatLuggageCbox;
+
+
     @FXML
     private Label seatLuggageShow;
+
     @FXML
     private Label usernameShow;
+
     @FXML
     private Label homeShowDate;
+
     @FXML
     private Label homeShowTime;
+
     @FXML
     private JFXComboBox<String> discountCbox;
+
     @FXML
     private TextArea receiptTxtArea;
+
     @FXML
     private JFXButton signOutBtn;
+
     @FXML
     private JFXButton okBtn;
+
+
     @FXML
     private TableView<Schedule> tblSchedule;
+
     @FXML
     private TableColumn<Schedule, String> busnumColSchedule;
+
     @FXML
     private TableColumn<Schedule, String> timeColSchedule;
+
     @FXML
     private TableColumn<Schedule, String> destinationColSchedule;
+
     @FXML
     private TableColumn<Schedule, String> seatColSchedule;
+
     @FXML
     private TableColumn<Schedule, String> priceColSchedule;
+
     @FXML
     private TableView<Destination> tblDestination;
+
     @FXML
     private TableColumn<Destination, String> toColDestination;
+
     @FXML
     private TableColumn<Destination, String> fromColDestination;
+
     @FXML
     private TableView<Schedule> tblBook;
+
     @FXML
     private TableColumn<Schedule, String> departureColBook;
+
     @FXML
     private TableColumn<Schedule, String> destinationColBook;
+
     @FXML
     private TableColumn<Schedule, String> seatColBook;
+
     @FXML
     private TableColumn<Schedule, String> typeColBook;
+
     @FXML
     private TableColumn<Schedule, String> priceColBook;
+
     @FXML
     private JFXTextField busTimeFld;
+
     @FXML
     private JFXTextField busTypeFld;
+
     @FXML
     private JFXTextField busDestiFld;
+
     @FXML
     private JFXTextField busPriceFld;
+
     @FXML
     private Tab epassTab;
+
     @FXML
     private JFXTextField busNumberFld;
+
     @FXML
     private JFXTextField busDateFld;
+
     @FXML
     private JFXTextField availSeatFld;
+
     @FXML
     private JFXTextField reserveSeatFld;
+
     @FXML
     private JFXTextField nameReserveFld;
 
@@ -221,7 +257,7 @@ public class MainFormController implements Initializable {
         //usernameShow.setText("");
         showDate();
         showTime();
-
+ 
     }
 
     void showDate() {
@@ -278,12 +314,13 @@ public class MainFormController implements Initializable {
         int avail_seat_num = Integer.parseInt(availSeatFld.getText());
         int remaining_seat = avail_seat_num - reserve_seat_num;
 
+        ResultSet rs;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bussystem", "root", "");
             Statement stat = con.createStatement();
             String select = "select * from bus_booking where bus_no ='" + bus_no + "'";
-            ResultSet rs = stat.executeQuery(select);
+            rs = stat.executeQuery(select);
 
             String insert = "insert into bus_booking values('" + bus_no + "','" + reserveSeatFld.getText() + "','" + username + "')";
             int i = stat.executeUpdate(insert);
@@ -293,7 +330,7 @@ public class MainFormController implements Initializable {
                     String updateQuery = "update bus_details set bus_seat='" + remaining_seat + "' where bus_no='" + bus_no + "'";
                     stat.executeUpdate(updateQuery);
                     JOptionPane.showMessageDialog(null, "Bus seat updated");
-                } else {
+                }else{
                     JOptionPane.showMessageDialog(null, "There are no more availble seat");
                 }
 
@@ -308,6 +345,7 @@ public class MainFormController implements Initializable {
         double total_discount = 0;
         double bus_price = 0.00;
         double luggage_price = Double.parseDouble(seatLuggageShow.getText());
+        
 
         if (discount_type.equalsIgnoreCase("Student") || discount_type.equalsIgnoreCase("Senior Citizen")
                 || discount_type.equalsIgnoreCase("PWD/Disable")) {
