@@ -75,7 +75,7 @@ public class AdminController implements Initializable {
 
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    Parent changeToAcp = FXMLLoader.load(getClass().getResource("AdminControlPanel.fxml"));
+                    Parent changeToAcp = FXMLLoader.load(getClass().getResource("/view/AdminControlPanel.fxml"));
                     Scene changeAdminScene = new Scene(changeToAcp);
                     Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     mainStage.setScene(changeAdminScene);
@@ -93,7 +93,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void handleBackBtn(ActionEvent event) throws IOException {
-        Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent changeToLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         Scene changeRegScene = new Scene(changeToLogin);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeRegScene);

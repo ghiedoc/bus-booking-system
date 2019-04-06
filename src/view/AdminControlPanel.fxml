@@ -107,6 +107,26 @@
                         </AnchorPane>
                     </content>
                   </Tab>
+                  <Tab text="Bus Details">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tblBusDetails" layoutX="12.0" layoutY="11.0" prefHeight="255.0" prefWidth="699.0">
+                                 <columns>
+                                    <TableColumn fx:id="busNumCol" prefWidth="83.0" text="Bus No." />
+                                    <TableColumn fx:id="destiCol" prefWidth="173.0" text="Destination" />
+                                    <TableColumn fx:id="sourceCol" prefWidth="69.0" text="Source" />
+                                    <TableColumn fx:id="timeCol" prefWidth="81.0" text="Depart. Time" />
+                                    <TableColumn fx:id="dateCol" text="Depart. Date" />
+                                    <TableColumn fx:id="typeCol" prefWidth="91.0" text="Bus Type" />
+                                    <TableColumn fx:id="seatCol" prefWidth="75.0" text="Avail. Seats" />
+                                    <TableColumn fx:id="priceCol" prefWidth="46.0" text="Price" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                   <Tab text="Manage Admin">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

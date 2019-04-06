@@ -98,9 +98,28 @@ public class AdminControlPanelController implements Initializable {
     private JFXTextField nameFld;
     @FXML
     private Button deleteBtn;
-
+    @FXML
+    private TableView<Schedule> tblBusDetails;
+    @FXML
+    private TableColumn<Schedule, String> busNumCol;
+    @FXML
+    private TableColumn<Schedule, String> destiCol;
+    @FXML
+    private TableColumn<Schedule, String> sourceCol;
+    @FXML
+    private TableColumn<Schedule, String> timeCol;
+    @FXML
+    private TableColumn<Schedule, String> dateCol;
+    @FXML
+    private TableColumn<Schedule, String> typeCol;
+    @FXML
+    private TableColumn<Schedule, String> seatCol;
+    @FXML
+    private TableColumn<Schedule, String> priceCol;
+    
     //for table
     ObservableList<AdminList> admin_list = FXCollections.observableArrayList();
+    ObservableList<Schedule> bus_details = FXCollections.observableArrayList();
     
 
     /**
@@ -131,11 +150,38 @@ public class AdminControlPanelController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //bus_list table
+        try {
+            Connection con = DBConnector.getConnection();
+            ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
+
+            while (rs.next()) {
+                bus_details.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_time"), 
+                        rs.getString("bus_destination"), rs.getString("bus_seat"), rs.getString("bus_price"), 
+                        rs.getString("bus_type"), rs.getString("bus_source"), rs.getString("bus_date")));
+            }
+            refreshTable();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         //table at admin_list
         admInNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         adminUserCol.setCellValueFactory(new PropertyValueFactory<>("admin"));
         tblListAdmins.setItems(admin_list);
+        
+        //table for bus_details
+        busNumCol.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
+        destiCol.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
+        sourceCol.setCellValueFactory(new PropertyValueFactory<>("bus_source"));
+        timeCol.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("bus_date"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("bus_type"));
+        seatCol.setCellValueFactory(new PropertyValueFactory<>("bus_seat"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
+        tblBusDetails.setItems(bus_details);
 
         //number validator
         NumberValidator numVali = new NumberValidator();
@@ -250,7 +296,7 @@ public class AdminControlPanelController implements Initializable {
     @FXML
     void handleSignOutBtn(ActionEvent event) throws IOException {
 
-        Parent Login = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent Login = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         Scene changeAdminScene = new Scene(Login);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeAdminScene);
@@ -270,6 +316,7 @@ public class AdminControlPanelController implements Initializable {
         });
     }
 
+    @FXML
     public void deleteAdmin() {
         String name = nameFld.getText();
 

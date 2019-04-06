@@ -76,7 +76,7 @@ public class RegisterController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Successfully Added!");
 
                 //transition to MainForm    
-                Parent changeToMain = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
+                Parent changeToMain = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
                 Scene changeMainScene = new Scene(changeToMain);
                 Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 mainStage.setScene(changeMainScene);
@@ -91,7 +91,7 @@ public class RegisterController implements Initializable {
 
     @FXML
     void handleBackBtn(ActionEvent event) throws IOException {
-        Parent changeToLogin = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent changeToLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         Scene changeLoginScene = new Scene(changeToLogin);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeLoginScene);

@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
 
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    Parent changeToReg = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
+                    Parent changeToReg = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
                     Scene changeRegScene = new Scene(changeToReg);
                     Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     mainStage.setScene(changeRegScene);
@@ -93,7 +93,7 @@ public class LoginController implements Initializable {
     @FXML
     void handleRegisterBtn(ActionEvent event) throws IOException {
 
-        Parent changeToMain = FXMLLoader.load(getClass().getResource("Register.fxml"));
+        Parent changeToMain = FXMLLoader.load(getClass().getResource("/view/Register.fxml"));
         Scene changeMainScene = new Scene(changeToMain);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeMainScene);
@@ -102,7 +102,7 @@ public class LoginController implements Initializable {
     
     @FXML
     void handleAdminBtn(ActionEvent event) throws IOException {
-        Parent changeToAdmin = FXMLLoader.load(getClass().getResource("Admin.fxml"));
+        Parent changeToAdmin = FXMLLoader.load(getClass().getResource("/view/Admin.fxml"));
         Scene changeLoginScene = new Scene(changeToAdmin);
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeLoginScene);

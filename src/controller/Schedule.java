@@ -36,6 +36,17 @@ public class Schedule {
         this.bus_seat = bus_seat;
         this.bus_price = bus_price;   
     }
+
+    public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type, String bus_source, String bus_date) {
+        this.bus_no = bus_no;
+        this.bus_time = bus_time;
+        this.bus_destination = bus_destination;
+        this.bus_seat = bus_seat;
+        this.bus_price = bus_price;
+        this.bus_type = bus_type;
+        this.bus_source = bus_source;
+        this.bus_date = bus_date;
+    }
     
     public Schedule(String bus_date) {
         this.bus_date = bus_date;  
