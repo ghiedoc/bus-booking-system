@@ -221,7 +221,7 @@ public class AdminControlPanelController implements Initializable {
     void showTime() {
         //SHOW TIME
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
             showTime.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);

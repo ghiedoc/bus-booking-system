@@ -31,11 +31,6 @@
                                           <Font name="System Bold" size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="usernameShow" layoutX="38.0" layoutY="49.0" text="show username" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
                                     <Label fx:id="homeShowDate" layoutX="580.0" layoutY="25.0" text="showDate" textFill="WHITE">
                                        <font>
                                           <Font size="24.0" />
@@ -44,6 +39,11 @@
                                     <Label fx:id="homeShowTime" layoutX="727.0" layoutY="25.0" text="showTime" textFill="WHITE">
                                        <font>
                                           <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="usernameShow" layoutX="67.0" layoutY="47.0" text="show username" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>

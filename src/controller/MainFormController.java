@@ -133,13 +133,17 @@ public class MainFormController implements Initializable {
     //for combo box
     final ObservableList source = FXCollections.observableArrayList();
     final ObservableList destination = FXCollections.observableArrayList();
+    
+    //for showing username
+    user us = user.getINSTANCE();
+    String username = us.getUsername();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        usernameShow.setText(username);
         reserveSeatFld.setText("1");
         reserveSeatFld.setEditable(false);
         
@@ -238,7 +242,7 @@ public class MainFormController implements Initializable {
     void showTime() {
         //SHOW TIME
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
             homeShowTime.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
@@ -273,7 +277,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     void handleOkBtn(ActionEvent event) {
-
+        
         //SEAT RESERVATION PROCESS
         String bus_no = busNumberFld.getText();
         String username = nameReserveFld.getText();
@@ -296,7 +300,8 @@ public class MainFormController implements Initializable {
                 if (remaining_seat != 0) {
                     String updateQuery = "update bus_details set bus_seat='" + remaining_seat + "' where bus_no='" + bus_no + "'";
                     stat.executeUpdate(updateQuery);
-                    JOptionPane.showMessageDialog(null, "Bus seat updated");
+                    System.out.println("Bus seat updated");
+                    JOptionPane.showMessageDialog(null, "You have successfully reserve a seat ");
                 }else{
                     JOptionPane.showMessageDialog(null, "There are no more availble seat");
                 }
@@ -353,6 +358,9 @@ public class MainFormController implements Initializable {
         receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n\n");
         receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount:\t Php. " + overall_price_discounted);
         receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount:  Php. " + overall_price_woutdisc);
+        
+        //change to recceipt pane
+        tabPane.getSelectionModel().select(epassTab);
 
     }
 

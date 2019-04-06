@@ -108,5 +108,9 @@ public class LoginController implements Initializable {
         mainStage.setScene(changeLoginScene);
         mainStage.show();
     }
+    
+    public void setUsername(){
+        usernameTxtField.getText();
+    }
 
 }
