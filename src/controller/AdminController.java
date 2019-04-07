@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;

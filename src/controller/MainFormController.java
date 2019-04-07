@@ -130,10 +130,6 @@ public class MainFormController implements Initializable {
     ObservableList<Schedule> oblist_schedule = FXCollections.observableArrayList();
     ObservableList<Destination> oblist_destination = FXCollections.observableArrayList();
 
-    //for combo box
-    final ObservableList source = FXCollections.observableArrayList();
-    final ObservableList destination = FXCollections.observableArrayList();
-
     //for showing username
     user us = user.getINSTANCE();
     String username = us.getUsername();

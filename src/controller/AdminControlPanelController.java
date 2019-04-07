@@ -14,7 +14,6 @@ import com.jfoenix.validation.NumberValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -119,14 +118,12 @@ public class AdminControlPanelController implements Initializable {
     private TableColumn<Schedule, String> priceCol;
     @FXML
     private Button busDelete;
-    
+    @FXML
+    private TextField busNoFld;
+
     //for table
     ObservableList<AdminList> admin_list = FXCollections.observableArrayList();
     ObservableList<Schedule> bus_details = FXCollections.observableArrayList();
-    @FXML
-    private TextField busNoFld;
-    
-    
 
     /**
      * Initializes the controller class.
@@ -153,21 +150,6 @@ public class AdminControlPanelController implements Initializable {
             while (rs.next()) {
                 admin_list.add(new AdminList(rs.getString("name"), rs.getString("username")));
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //bus_list table
-        try {
-            Connection con = DBConnector.getConnection();
-            ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
-
-            while (rs.next()) {
-                bus_details.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_time"), 
-                        rs.getString("bus_destination"), rs.getString("bus_seat"), rs.getString("bus_price"), 
-                        rs.getString("bus_type"), rs.getString("bus_source"), rs.getString("bus_date")));
-            }
             refreshTable();
 
         } catch (SQLException ex) {
@@ -178,7 +160,23 @@ public class AdminControlPanelController implements Initializable {
         admInNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         adminUserCol.setCellValueFactory(new PropertyValueFactory<>("admin"));
         tblListAdmins.setItems(admin_list);
-        
+
+        //bus_list table
+        try {
+            Connection con = DBConnector.getConnection();
+            ResultSet rs = con.createStatement().executeQuery("select * from bus_details");
+
+            while (rs.next()) {
+                bus_details.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_destination"),
+                        rs.getString("bus_source"), rs.getString("bus_time"), rs.getString("bus_date"),
+                        rs.getString("bus_type"), rs.getString("bus_seat"), rs.getString("bus_price")));
+            }
+            //refreshBusTable();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //table for bus_details
         busNumCol.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
         destiCol.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
@@ -204,7 +202,7 @@ public class AdminControlPanelController implements Initializable {
                 }
             }
         });
-        
+
         //fetch data from table into field
         setCellValueFromTableToField();
         setCellValueFromTableToFieldBusNo();
@@ -232,10 +230,65 @@ public class AdminControlPanelController implements Initializable {
     private void clearFieldValue() {
         busNumberField.setText("");
         seatNumberField.setText("");
-        sourceField.setText("");
         destinationField.setText("");
         timeField.setText("");
         priceField.setText("");
+    }
+
+    public void adminClearField() {
+        nameFld.setText("");
+        adminFld.setText("");
+        passwordFld.setText("");
+    }
+
+    public void refreshTable() {
+
+        admin_list.clear();
+
+        try {
+            String admin_query = "select * from admin_details";
+            PreparedStatement ps;
+            Connection con = DBConnector.getConnection();
+            ps = con.prepareStatement(admin_query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                admin_list.add(new AdminList(rs.getString("name"), rs.getString("username")));
+            }
+            tblListAdmins.setItems(admin_list);
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    //problem here
+    public void refreshBusTable() {
+    
+        bus_details.clear();
+
+        try {
+            String bus_query = "select * from bus_details";
+            PreparedStatement ps;
+            Connection con = DBConnector.getConnection();
+            ps = con.prepareStatement(bus_query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                bus_details.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_destination"),
+                        rs.getString("bus_source"), rs.getString("bus_time"), rs.getString("bus_date"),
+                        rs.getString("bus_type"), rs.getString("bus_seat"), rs.getString("bus_price")));
+            }
+            tblBusDetails.setItems(bus_details);
+            ps.close();
+            rs.close();
+            
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @FXML
@@ -256,14 +309,13 @@ public class AdminControlPanelController implements Initializable {
             JOptionPane.showMessageDialog(null, "There are empty fields!");
         } else {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
-                com.mysql.jdbc.Connection con = (com.mysql.jdbc.Connection) DriverManager.getConnection(databaseURL, "root", "");
+                Connection con = DBConnector.getConnection();
                 Statement stat = con.createStatement();
-                String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
-                        + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
+                String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_desti + "', '" + bus_source + "',"
+                        + " '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_seat + "', '" + bus_price + "')";               
                 stat.executeUpdate(insertQuery);
                 JOptionPane.showMessageDialog(null, "Bus Details Added!");
+                refreshBusTable();
                 clearFieldValue();
 
             } catch (Exception e) {
@@ -290,8 +342,8 @@ public class AdminControlPanelController implements Initializable {
                 if (x == 1) {
                     JOptionPane.showMessageDialog(null, "Successfully Added!");
                 }
-               refreshTable();
-               adminClearField();
+                refreshTable();
+                adminClearField();
 
             } catch (Exception e) {
                 System.out.println(e);
@@ -299,17 +351,6 @@ public class AdminControlPanelController implements Initializable {
         }
     }
 
-    @FXML
-    void handleSignOutBtn(ActionEvent event) throws IOException {
-
-        Parent Login = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-        Scene changeAdminScene = new Scene(Login);
-        Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        mainStage.setScene(changeAdminScene);
-        mainStage.show();
-
-    }
-    
     //fetch data from table to field
     private void setCellValueFromTableToField() {
         tblListAdmins.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -322,8 +363,8 @@ public class AdminControlPanelController implements Initializable {
 
         });
     }
-    
-    private void setCellValueFromTableToFieldBusNo(){
+
+    private void setCellValueFromTableToFieldBusNo() {
         tblBusDetails.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
@@ -344,18 +385,18 @@ public class AdminControlPanelController implements Initializable {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Removed Successfully!");
+            JOptionPane.showMessageDialog(null, "Removed Admin Successfully!");
             refreshTable();
-            
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
+
     @FXML
-    public void deleteBusDetail(){
+    public void deleteBusDetail() {
         String bus_no = busNoFld.getText();
+
         try {
             String sql = "delete from `bus_details` where bus_no = ?";
 
@@ -363,67 +404,23 @@ public class AdminControlPanelController implements Initializable {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, bus_no);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Removed Successfully!");
-            //refreshBusTable();
-            
+            JOptionPane.showMessageDialog(null, "Removed bus details Successfully!");
+            refreshBusTable();
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
 
-    public void refreshTable() {    
-        
-        admin_list.clear();
-            
-        try{
-            String admin_query = "select * from admin_details";
-            PreparedStatement ps;
-            Connection con = DBConnector.getConnection();
-            ps = con.prepareStatement(admin_query);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                admin_list.add(new AdminList(rs.getString("name"), rs.getString("username")));
-            }
-            tblListAdmins.setItems(admin_list);
-            ps.close();
-            rs.close();
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }      
-    }
-    
-    //problem here
-    public void refreshBusTable(){
-        bus_details.clear();
-                      
-        try{
-            String bus_query = "select * from bus_details";
-            PreparedStatement ps;
-            Connection con = DBConnector.getConnection();
-            ps = con.prepareStatement(bus_query);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                bus_details.add(new Schedule(rs.getString("bus_no"),rs.getString("bus_destination"),
-                        rs.getString("bus_source"),rs.getString("bus_time"),rs.getString("bus_date"),
-                        rs.getString("bus_type"),rs.getString("bus_seat"),rs.getString("bus_price")));
-            }
-            tblBusDetails.setItems(bus_details);
-            ps.close();
-            rs.close();
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-    
-    public void adminClearField(){
-        nameFld.setText("");
-        adminFld.setText("");
-        passwordFld.setText("");
+    @FXML
+    void handleSignOutBtn(ActionEvent event) throws IOException {
+
+        Parent Login = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Scene changeAdminScene = new Scene(Login);
+        Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        mainStage.setScene(changeAdminScene);
+        mainStage.show();
+
     }
 
 }

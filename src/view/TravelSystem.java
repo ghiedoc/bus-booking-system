@@ -20,9 +20,10 @@ public class TravelSystem extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AdminControlPanel.fxml"));
         stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
+        stage.setTitle("Bus Reservation System");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

@@ -12,13 +12,16 @@ package controller;
 public class Schedule {
 
     private String bus_no;
-    private String bus_time;
     private String bus_destination;
+    private String bus_source;
+    private String bus_time;
+    private String bus_date;
+    private String bus_type;
     private String bus_seat;
     private String bus_price;
-    private String bus_type;
-    private String bus_source;
-    private String bus_date;
+    
+    
+    
 
     public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type) {
         this.bus_no = bus_no;
@@ -37,15 +40,18 @@ public class Schedule {
         this.bus_price = bus_price;   
     }
 
-    public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type, String bus_source, String bus_date) {
+    public Schedule(String bus_no, String bus_destination, String bus_source, String bus_time, String bus_date, String bus_type, String bus_seat, String bus_price) {
         this.bus_no = bus_no;
-        this.bus_time = bus_time;
         this.bus_destination = bus_destination;
+        this.bus_source = bus_source;
+        this.bus_time = bus_time;
+        this.bus_date = bus_date;
+        this.bus_type = bus_type;
         this.bus_seat = bus_seat;
         this.bus_price = bus_price;
-        this.bus_type = bus_type;
-        this.bus_source = bus_source;
-        this.bus_date = bus_date;
+        
+        
+        
     }
     
     public Schedule(String bus_date) {
@@ -59,8 +65,6 @@ public class Schedule {
     public void setBus_date(String bus_date) {
         this.bus_date = bus_date;
     }
-    
-    
 
     public String getBus_no() {
         return bus_no;
