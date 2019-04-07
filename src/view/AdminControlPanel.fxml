@@ -36,7 +36,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="showTime" layoutX="396.0" layoutY="80.0" prefHeight="35.0" prefWidth="158.0" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="showTime" layoutX="428.0" layoutY="80.0" prefHeight="35.0" prefWidth="158.0" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -141,30 +141,35 @@
                            <children>
                               <AnchorPane layoutX="37.0" layoutY="21.0" prefHeight="259.0" prefWidth="313.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="25.0" layoutY="22.0" text="Add New Administrator" textFill="#270ea4">
+                                    <Label layoutX="89.0" layoutY="49.0" text="Add New Admin" textFill="#270ea4">
                                        <font>
-                                          <Font name="System Bold" size="24.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="adminFld" layoutX="97.0" layoutY="106.0" />
-                                    <ImageView fitHeight="35.0" fitWidth="27.0" layoutX="50.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+                                    <JFXTextField fx:id="adminFld" layoutX="105.0" layoutY="122.0" />
+                                    <ImageView fitHeight="35.0" fitWidth="27.0" layoutX="58.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/admin.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="29.0" fitWidth="24.0" layoutX="52.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="29.0" fitWidth="24.0" layoutX="60.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/password.png" />
                                        </image>
                                     </ImageView>
                                     <JFXButton fx:id="newAdminBtn" layoutX="102.0" layoutY="214.0" onAction="#handleAddAdminBtn" styleClass="btn-login" text="Register" />
-                                    <JFXPasswordField fx:id="passwordFld" layoutX="97.0" layoutY="154.0" />
-                                    <Label layoutX="43.0" layoutY="71.0" text="Name:">
+                                    <JFXPasswordField fx:id="passwordFld" layoutX="105.0" layoutY="162.0" />
+                                    <Label layoutX="51.0" layoutY="89.0" text="Name:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="nameFld" layoutX="97.0" layoutY="66.0" />
+                                    <JFXTextField fx:id="nameFld" layoutX="105.0" layoutY="84.0" />
+                                    <ImageView fitHeight="44.0" fitWidth="42.0" layoutX="136.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/add%20admin.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                               <TableView fx:id="tblListAdmins" layoutX="401.0" layoutY="21.0" prefHeight="228.0" prefWidth="276.0">
@@ -185,6 +190,16 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="201.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/calendar.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="396.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/sched.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

@@ -9,29 +9,43 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <StackPane prefHeight="618.0" prefWidth="905.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFormController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="571.0" prefWidth="905.0">
+      <AnchorPane id="AnchorPane" prefHeight="571.0" prefWidth="905.0" style="-fx-background-color: #757de8;">
          <children>
-            <AnchorPane prefHeight="68.0" prefWidth="905.0" style="-fx-background-color: #e62444;" />
+            <AnchorPane prefHeight="68.0" prefWidth="905.0" style="-fx-background-color: #e62444;">
+               <children>
+                  <Label layoutX="372.0" layoutY="21.0" text="M  E  T  R  O  U  T  E" textFill="WHITE">
+                     <font>
+                        <Font name="Open Sans Semibold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="51.0" fitWidth="60.0" layoutX="311.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/bus.png" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
             <JFXTabPane fx:id="tabPane" layoutX="-1.0" layoutY="68.0" prefHeight="506.0" prefWidth="905.0">
                <tabs>
                   <Tab text="Home">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #757de8;">
                            <children>
                               <AnchorPane layoutX="24.0" layoutY="22.0" prefHeight="84.0" prefWidth="867.0" style="-fx-background-color: #002984;" styleClass="card">
                                  <children>
-                                    <Label layoutX="23.0" layoutY="14.0" text="Welcome" textFill="WHITE">
+                                    <Label layoutX="21.0" layoutY="14.0" text="Welcome" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="homeShowDate" layoutX="580.0" layoutY="25.0" text="showDate" textFill="WHITE">
+                                    <Label fx:id="homeShowDate" layoutX="546.0" layoutY="25.0" text="showDate" textFill="WHITE">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -46,16 +60,26 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
+                                    <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="509.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/calendar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="695.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/sched.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="24.0" layoutY="118.0" prefHeight="335.0" prefWidth="490.0" style="-fx-background-color: #757de8;" styleClass="card">
+                              <AnchorPane layoutX="24.0" layoutY="118.0" prefHeight="335.0" prefWidth="490.0" style="-fx-background-color: #3f51b5;" styleClass="card">
                                  <children>
-                                    <Label layoutX="185.0" layoutY="14.0" text="Schedule" textFill="WHITE">
+                                    <Label layoutX="200.0" layoutY="6.0" text="Schedule" textFill="WHITE">
                                        <font>
                                           <Font name="Open Sans Semibold" size="24.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="tblSchedule" layoutX="14.0" layoutY="49.0" prefHeight="274.0" prefWidth="462.0">
+                                    <TableView fx:id="tblSchedule" layoutX="14.0" layoutY="41.0" prefHeight="282.0" prefWidth="462.0">
                                       <columns>
                                         <TableColumn fx:id="busnumColSchedule" prefWidth="114.0" text="Bus. No." />
                                         <TableColumn fx:id="timeColSchedule" prefWidth="70.0" text="Departure" />
@@ -64,11 +88,16 @@
                                           <TableColumn fx:id="priceColSchedule" prefWidth="67.0" text="Price" />
                                       </columns>
                                     </TableView>
+                                    <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="170.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/sched.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="526.0" layoutY="118.0" prefHeight="336.0" prefWidth="363.0" style="-fx-background-color: #3f51b5;" styleClass="card">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="14.0" text="Available Destinations" textFill="WHITE">
+                                    <Label layoutX="71.0" layoutY="13.0" text="Available Destinations" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
                                        </font>
@@ -79,6 +108,11 @@
                                         <TableColumn fx:id="fromColDestination" minWidth="0.0" prefWidth="168.0" text="From" />
                                       </columns>
                                     </TableView>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="30.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/bus.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
@@ -86,15 +120,15 @@
                   </Tab>
                   <Tab text="Book">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="510.0" prefWidth="905.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="510.0" prefWidth="905.0" style="-fx-background-color: #757de8;">
                            <children>
-                              <TableView fx:id="tblBook" layoutX="467.0" layoutY="41.0" prefHeight="216.0" prefWidth="423.0">
+                              <TableView fx:id="tblBook" layoutX="438.0" layoutY="41.0" prefHeight="216.0" prefWidth="452.0">
                                 <columns>
                                   <TableColumn fx:id="departureColBook" prefWidth="75.0" text="Departure" />
                                   <TableColumn fx:id="destinationColBook" prefWidth="169.0" text="Destination" />
                                     <TableColumn fx:id="seatColBook" prefWidth="41.0" text="Seats" />
-                                    <TableColumn fx:id="typeColBook" prefWidth="69.0" text="Bus Type" />
-                                    <TableColumn fx:id="priceColBook" prefWidth="68.0" text="Price" />
+                                    <TableColumn fx:id="typeColBook" prefWidth="91.666748046875" text="Bus Type" />
+                                    <TableColumn fx:id="priceColBook" prefWidth="74.333251953125" text="Price" />
                                 </columns>
                               </TableView>
                               <JFXButton fx:id="okBtn" layoutX="624.0" layoutY="422.0" onAction="#handleOkBtn" prefHeight="31.0" prefWidth="125.0" styleClass="btn-login" text="Show E-Pass" />
@@ -209,32 +243,48 @@
                                     </JFXTextField>
                                  </children>
                               </AnchorPane>
-                              <Label layoutX="552.0" layoutY="9.0" text="Choose your destination here:" textFill="#4000a8">
+                              <Label layoutX="553.0" layoutY="10.0" text="Choose your destination here:" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="467.0" layoutY="272.0" prefHeight="138.0" prefWidth="424.0" styleClass="card">
+                              <AnchorPane layoutX="439.0" layoutY="272.0" prefHeight="138.0" prefWidth="452.0" styleClass="card">
                                  <children>
-                                    <Label layoutX="75.0" layoutY="40.0" text="Reserve 1 seat:">
+                                    <Label layoutX="88.0" layoutY="50.0" text="Reserve 1 seat:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="129.0" layoutY="78.0" text="Name:">
+                                    <Label layoutX="142.0" layoutY="88.0" text="Name:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="reserveSeatFld" focusColor="#ea3b3b" layoutX="178.0" layoutY="35.0" />
-                                    <JFXTextField fx:id="nameReserveFld" focusColor="#ea3b3b" layoutX="178.0" layoutY="72.0" />
+                                    <JFXTextField fx:id="reserveSeatFld" focusColor="#ea3b3b" layoutX="191.0" layoutY="38.0">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></JFXTextField>
+                                    <JFXTextField fx:id="nameReserveFld" focusColor="#ea3b3b" layoutX="191.0" layoutY="77.0">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></JFXTextField>
                                     <Label layoutX="101.0" layoutY="14.0" text="Note: Only one (1) seat per reservation." textFill="#d71b1b">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
+                                    <ImageView fitHeight="26.0" fitWidth="23.0" layoutX="60.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/seat.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
+                              <ImageView fitHeight="35.0" fitWidth="46.0" layoutX="514.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/bus.png" />
+                                 </image>
+                              </ImageView>
                            </children></AnchorPane>
                     </content>
                   </Tab>
@@ -242,22 +292,22 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <AnchorPane layoutX="37.0" layoutY="15.0" prefHeight="436.0" prefWidth="834.0" style="-fx-background-color: #757de8;" styleClass="card">
+                              <AnchorPane layoutX="37.0" layoutY="15.0" prefHeight="436.0" prefWidth="834.0" style="-fx-background-color: #002984;" styleClass="card">
                                  <children>
-                                    <Label layoutX="342.0" layoutY="16.0" text="Your Receipt:" textFill="WHITE">
+                                    <Label layoutX="360.0" layoutY="8.0" text="Your Receipt:" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
                                        </font>
                                     </Label>
-                                    <TextArea fx:id="receiptTxtArea" layoutX="240.0" layoutY="52.0" prefHeight="369.0" prefWidth="355.0" />
+                                    <TextArea fx:id="receiptTxtArea" layoutX="256.0" layoutY="41.0" prefHeight="380.0" prefWidth="355.0" />
+                                    <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="323.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/receipt.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Ratings">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                   </Tab>
                </tabs>

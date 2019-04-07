@@ -20,9 +20,9 @@
                   <Image url="@../images/login-head.png" />
                </image>
             </ImageView>
-            <Label layoutX="183.0" layoutY="182.0" text="Admin" textFill="WHITE">
+            <Label layoutX="164.0" layoutY="172.0" text="Administrator" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <AnchorPane layoutY="231.0" prefHeight="300.0" prefWidth="441.0" style="-fx-background-color: #ffffff;">
@@ -69,6 +69,11 @@
                   </JFXButton>
                </children>
             </AnchorPane>
+            <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="157.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/admin-setting.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

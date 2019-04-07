@@ -260,9 +260,6 @@ public class AdminControlPanelController implements Initializable {
                 String databaseURL = "jdbc:mysql://localhost:3306/bussystem";
                 com.mysql.jdbc.Connection con = (com.mysql.jdbc.Connection) DriverManager.getConnection(databaseURL, "root", "");
                 Statement stat = con.createStatement();
-                //String selectQuery = "SELECT * FROM bus_details WHERE bus_no = '" + bus_no + "'";
-                //ResultSet rs = stat.executeQuery(selectQuery);
-
                 String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
                         + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
                 stat.executeUpdate(insertQuery);
@@ -430,20 +427,3 @@ public class AdminControlPanelController implements Initializable {
     }
 
 }
-
-//                String selectQuery = "SELECT * FROM bus_details WHERE bus_no = '" + bus_no + "'";
-//
-//                ResultSet rs = stat.executeQuery(selectQuery);
-//
-//                if (rs.next() == true) {
-//
-//                    JOptionPane.showMessageDialog(null, "Already added that details!");
-//                    clearFieldValue();
-//
-//                } else {
-//                    String insertQuery = "insert into bus_details values(null,'" + bus_no + "', '" + bus_seat + "', '" + bus_source + "',"
-//                            + " '" + bus_desti + "', '" + bus_time + "', '" + bus_date + "', '" + bus_type + "', '" + bus_price + "')";
-//                    stat.executeUpdate(insertQuery);
-//                    JOptionPane.showMessageDialog(null, "Bus Details Added!");
-//                    clearFieldValue();
-//                }
