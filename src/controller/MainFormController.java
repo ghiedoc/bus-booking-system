@@ -133,7 +133,7 @@ public class MainFormController implements Initializable {
     //for combo box
     final ObservableList source = FXCollections.observableArrayList();
     final ObservableList destination = FXCollections.observableArrayList();
-    
+
     //for showing username
     user us = user.getINSTANCE();
     String username = us.getUsername();
@@ -146,7 +146,7 @@ public class MainFormController implements Initializable {
         usernameShow.setText(username);
         reserveSeatFld.setText("1");
         reserveSeatFld.setEditable(false);
-        
+
         ////////////////////////////table_schedule////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
@@ -228,7 +228,7 @@ public class MainFormController implements Initializable {
         //usernameShow.setText("");
         showDate();
         showTime();
- 
+
     }
 
     void showDate() {
@@ -277,90 +277,104 @@ public class MainFormController implements Initializable {
 
     @FXML
     void handleOkBtn(ActionEvent event) {
-        
-        //SEAT RESERVATION PROCESS
-        String bus_no = busNumberFld.getText();
-        String username = nameReserveFld.getText();
-        int reserve_seat_num = Integer.parseInt(reserveSeatFld.getText());
-        int avail_seat_num = Integer.parseInt(availSeatFld.getText());
-        int remaining_seat = avail_seat_num - reserve_seat_num;
 
-        ResultSet rs;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bussystem", "root", "");
-            Statement stat = con.createStatement();
-            String select = "select * from bus_booking where bus_no ='" + bus_no + "'";
-            rs = stat.executeQuery(select);
+        if (busNumberFld.getText().equals("") || busTimeFld.getText().equals("")
+                || busTypeFld.getText().equals("") || busDestiFld.getText().equals("")
+                || availSeatFld.getText().equals("") || nameReserveFld.getText().equals("")) {
 
-            String insert = "insert into bus_booking values('" + bus_no + "','" + reserveSeatFld.getText() + "','" + username + "')";
-            int i = stat.executeUpdate(insert);
+            JOptionPane.showMessageDialog(null, "There are still empty fields!");
+            System.out.println("Missing Fields");
 
-            if (i == 1) {
-                if (remaining_seat != 0) {
-                    String updateQuery = "update bus_details set bus_seat='" + remaining_seat + "' where bus_no='" + bus_no + "'";
-                    stat.executeUpdate(updateQuery);
-                    System.out.println("Bus seat updated");
-                    JOptionPane.showMessageDialog(null, "You have successfully reserve a seat ");
-                }else{
-                    JOptionPane.showMessageDialog(null, "There are no more availble seat");
+        }else if(seatLuggageCbox.getSelectionModel().getSelectedItem().isEmpty()
+                || discountCbox.getSelectionModel().getSelectedItem().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "Luggage/Discount are empty!");
+            System.out.println("luggage or discount combobox is empty");
+        }
+        else {
+            //SEAT RESERVATION PROCESS
+            String bus_no = busNumberFld.getText();
+            String username = nameReserveFld.getText();
+            int reserve_seat_num = Integer.parseInt(reserveSeatFld.getText());
+            int avail_seat_num = Integer.parseInt(availSeatFld.getText());
+            int remaining_seat = avail_seat_num - reserve_seat_num;
+
+            ResultSet rs;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bussystem", "root", "");
+                Statement stat = con.createStatement();
+                String select = "select * from bus_booking where bus_no ='" + bus_no + "'";
+                rs = stat.executeQuery(select);
+
+                String insert = "insert into bus_booking values('" + bus_no + "','" + reserveSeatFld.getText() + "','" + username + "')";
+                int i = stat.executeUpdate(insert);
+
+                if (i == 1) {
+                    if (remaining_seat != 0) {
+                        String updateQuery = "update bus_details set bus_seat='" + remaining_seat + "' where bus_no='" + bus_no + "'";
+                        stat.executeUpdate(updateQuery);
+                        System.out.println("Bus seat updated");
+                        JOptionPane.showMessageDialog(null, "You have successfully reserve a seat " + nameReserveFld.getText() + ".");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There are no more availble seat");
+                    }
+
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            //DISCOUNT PRICE PROCESS
+            String discount_type = discountCbox.getValue();
+            String total_discount_str = "";
+            double total_discount = 0;
+            double bus_price = 0;
+            //double total_price = bus_price * reserve_seat_num;
+            double luggage_price = Double.parseDouble(seatLuggageShow.getText());
+
+            if (discount_type.equalsIgnoreCase("Student") || discount_type.equalsIgnoreCase("Senior Citizen")
+                    || discount_type.equalsIgnoreCase("PWD/Disable")) {
+
+                bus_price = Double.parseDouble(busPriceFld.getText());
+                System.out.println("original price: " + bus_price);
+                double discount_rate = bus_price * 0.20;
+                total_discount = bus_price - discount_rate;
+                System.out.println("total disc: " + total_discount);
+                NumberFormat formatter = new DecimalFormat("#0.00");
+                total_discount_str = String.valueOf(formatter.format(total_discount));
+
+            } else {
+                System.out.println("no discount");
+                bus_price = Double.parseDouble(busPriceFld.getText());
+                System.out.println("price: " + bus_price);
+            }
+
+            //OVERALL PRICE
+            double overall_price_discounted = total_discount + luggage_price;
+            double overall_price_woutdisc = bus_price + luggage_price;
+
+            receiptTxtArea.setText("-----------------------------E-PASS-----------------------------\n\n");
+            receiptTxtArea.setText("                                     METROUTE\n\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Bus #: \t\t\t\t\t\t" + busNumberFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Bus Type: \t\t\t\t\t" + busTypeFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Boarding Time: \t\t\t\t" + busTimeFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "From: \t\t\t\t\t\tPITX" + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "To: \t\t\t\t\t\t\t" + busDestiFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Seat Reserve: \t\t\t\t\t" + reserveSeatFld.getText() + " reservation for " + nameReserveFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Additional Service: \t\t\t\t" + seatLuggageCbox.getValue() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Discount Type: \t\t\t\t" + discountCbox.getValue() + "\n");
+
+            receiptTxtArea.setText(receiptTxtArea.getText() + "---------------------------------------------------------------\n\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\t" + "Php. " + busPriceFld.getText() + ".00" + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Discounted Price: \t\t\t" + "Php. " + total_discount_str + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount:\t Php. " + overall_price_discounted);
+            receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount:  Php. " + overall_price_woutdisc);
+
+            //change to recceipt pane
+            tabPane.getSelectionModel().select(epassTab);
         }
-
-        //DISCOUNT PRICE PROCESS
-        String discount_type = discountCbox.getValue();
-        String total_discount_str = "";
-        double total_discount = 0;
-        double bus_price = 0;
-        //double total_price = bus_price * reserve_seat_num;
-        double luggage_price = Double.parseDouble(seatLuggageShow.getText());
-        
-
-        if (discount_type.equalsIgnoreCase("Student") || discount_type.equalsIgnoreCase("Senior Citizen")
-                || discount_type.equalsIgnoreCase("PWD/Disable")) {
-
-            bus_price = Double.parseDouble(busPriceFld.getText());
-            System.out.println("original price: " + bus_price);
-            double discount_rate = bus_price * 0.20;
-            total_discount = bus_price - discount_rate;
-            System.out.println("total disc: " + total_discount);
-            NumberFormat formatter = new DecimalFormat("#0.00");
-            total_discount_str = String.valueOf(formatter.format(total_discount));
-
-        } else {
-            System.out.println("no discount");
-            bus_price = Double.parseDouble(busPriceFld.getText());
-            System.out.println("price: " + bus_price);
-        }
-
-        //OVERALL PRICE
-        double overall_price_discounted = total_discount + luggage_price;
-        double overall_price_woutdisc = bus_price + luggage_price;
-
-        receiptTxtArea.setText("-----------------------------E-PASS-----------------------------\n\n");
-        receiptTxtArea.setText("                                     METROUTE\n\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Bus #: \t\t\t\t\t\t" + busNumberFld.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Bus Type: \t\t\t\t\t" + busTypeFld.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Boarding Time: \t\t\t\t" + busTimeFld.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "From: \t\t\t\t\t\tPITX" + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "To: \t\t\t\t\t\t\t" + busDestiFld.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Seat Reserve: \t\t\t\t\t" + reserveSeatFld.getText() + " reservation for " + nameReserveFld.getText() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Additional Service: \t\t\t\t" + seatLuggageCbox.getValue() + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Discount Type: \t\t\t\t" + discountCbox.getValue() + "\n");
-
-        receiptTxtArea.setText(receiptTxtArea.getText() + "---------------------------------------------------------------\n\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\t" + "Php. " + busPriceFld.getText() + ".00" + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Discounted Price: \t\t\t" + "Php. " + total_discount_str + "\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Price: \t\t\t\t\tPhp. " + seatLuggageShow.getText() + "\n\n");
-        receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount:\t Php. " + overall_price_discounted);
-        receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount:  Php. " + overall_price_woutdisc);
-        
-        //change to recceipt pane
-        tabPane.getSelectionModel().select(epassTab);
 
     }
 

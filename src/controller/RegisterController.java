@@ -70,10 +70,10 @@ public class RegisterController implements Initializable {
                 int x = stat.executeUpdate(insertQuery);
                 System.out.println(x);
                 if (x == 1) {
-                    JOptionPane.showMessageDialog(null, "Information added on table");
+                    //JOptionPane.showMessageDialog(null, "Information added on table");
                 }
 
-                JOptionPane.showMessageDialog(null, "Successfully Added!");
+                JOptionPane.showMessageDialog(null, "Successfully Registered!");
 
                 //transition to MainForm    
                 Parent changeToMain = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
