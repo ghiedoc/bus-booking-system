@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<StackPane stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="519.0" prefWidth="424.0">
          <children>
@@ -44,7 +44,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="registerBtn" layoutX="328.0" layoutY="239.0" onAction="#handleRegisterBtn" text="Register">
+                  <JFXButton fx:id="registerBtn" layoutX="328.0" layoutY="239.0" onAction="#handleRegisterBtn" styleClass="btn-overall" text="Register">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -59,7 +59,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="adminBtn" layoutX="40.0" layoutY="239.0" onAction="#handleAdminBtn" text="Admin">
+                  <JFXButton fx:id="adminBtn" layoutX="40.0" layoutY="239.0" onAction="#handleAdminBtn" styleClass="btn-overall" text="Admin">
                      <font>
                         <Font size="14.0" />
                      </font>

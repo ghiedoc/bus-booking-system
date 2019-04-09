@@ -47,7 +47,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXPasswordField>
-                  <Button fx:id="loginBtn" layoutX="273.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAdminBtn" prefHeight="25.0" prefWidth="95.0" text="Log in">
+                  <Button fx:id="loginBtn" layoutX="273.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAdminBtn" prefHeight="25.0" prefWidth="95.0" styleClass="btn-overall" text="Log in">
                      <font>
                         <Font size="14.0" />
                      </font>

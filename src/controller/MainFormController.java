@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -118,8 +119,6 @@ public class MainFormController implements Initializable {
     @FXML
     private JFXTextField busNumberFld;
     @FXML
-    private JFXTextField busDateFld;
-    @FXML
     private JFXTextField availSeatFld;
     @FXML
     private JFXTextField reserveSeatFld;
@@ -127,6 +126,7 @@ public class MainFormController implements Initializable {
     private JFXTextField nameReserveFld;
 
     //for table
+    //I created an encapsulated class where it will return all the data's needed to populate in the jtable 
     ObservableList<Schedule> oblist_schedule = FXCollections.observableArrayList();
     ObservableList<Destination> oblist_destination = FXCollections.observableArrayList();
 
@@ -139,10 +139,20 @@ public class MainFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         usernameShow.setText(username);
+        /**
+         * In order to not change the reservation number field, it is by default
+         * set into "1" and then set it not editable so the user cannot type any
+         * number inside the text field.
+         */
         reserveSeatFld.setText("1");
         reserveSeatFld.setEditable(false);
 
+        /**
+         * To connect in the database I call the Connection and the DBConnector
+         * which is a class so that you can get connection on the database.
+         */
         ////////////////////////////table_schedule////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
@@ -158,6 +168,10 @@ public class MainFormController implements Initializable {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        /**
+         * This will set the data according to the cell column created on the
+         * table.
+         */
         //table at home tab
         busnumColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_no"));
         timeColSchedule.setCellValueFactory(new PropertyValueFactory<>("bus_time"));
@@ -173,8 +187,12 @@ public class MainFormController implements Initializable {
         typeColBook.setCellValueFactory(new PropertyValueFactory<>("bus_type"));
         priceColBook.setCellValueFactory(new PropertyValueFactory<>("bus_price"));
         tblBook.setItems(oblist_schedule);
-        //*****************************************************************************************
 
+        //*****************************************************************************************
+        /**
+         * To connect in the database I call the Connection and the DBConnector
+         * which is a class so that you can get connection on the database.
+         */
         ////////////////////////////table_destination////////////////////////////
         try {
             Connection con = DBConnector.getConnection();
@@ -189,15 +207,19 @@ public class MainFormController implements Initializable {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        /**
+         * This will set the data according to the cell column created on the
+         * table.
+         */
         toColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_source"));
         fromColDestination.setCellValueFactory(new PropertyValueFactory<>("bus_destination"));
         tblDestination.setItems(oblist_destination);
         //*****************************************************************************************
 
-        //choose destination text field part set to not editable so users don't modify it.
-        setCellValueFromTableToField();
+        /**
+         * This set the text fields to be not editable.
+         */
         busNumberFld.setEditable(false);
-        busDateFld.setEditable(false);
         busTimeFld.setEditable(false);
         busTypeFld.setEditable(false);
         busDestiFld.setEditable(false);
@@ -205,7 +227,9 @@ public class MainFormController implements Initializable {
         availSeatFld.setEditable(false);
         //**********************************
 
-        //adding item to luggage combo box
+        /**
+         * adding item to the luggage combo box
+         */
         seatLuggageCbox.getItems().addAll(
                 "None",
                 "Cartons",
@@ -213,7 +237,9 @@ public class MainFormController implements Initializable {
                 "Suitcase"
         );
 
-        //discount cbox
+        /**
+         * adding item to the discount combo box.
+         */
         discountCbox.getItems().addAll(
                 "None",
                 "Student",
@@ -224,9 +250,27 @@ public class MainFormController implements Initializable {
         //usernameShow.setText("");
         showDate();
         showTime();
-
+        setCellValueFromTableToField();
     }
 
+    /**
+     * This will erase all the inputted data inside the field.
+     */
+    private void clearFieldValue() {
+        busNumberFld.setText("");
+        busDestiFld.setText("");
+        busTypeFld.setText("");
+        busTimeFld.setText("");
+        availSeatFld.setText("");
+        busPriceFld.setText("");
+        nameReserveFld.setText("");
+    }
+
+    /**
+     * This method will allow to show the date. Create Date class and formatted
+     * it according on how you want it to show. Then set it to the homeShowDate
+     * label.
+     */
     void showDate() {
         //SHOW DATE
         Date d = new Date();
@@ -235,6 +279,9 @@ public class MainFormController implements Initializable {
 
     }
 
+    /**
+     * This method will allow to show the time.
+     */
     void showTime() {
         //SHOW TIME
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
@@ -246,9 +293,12 @@ public class MainFormController implements Initializable {
 
     }
 
+    /**
+     * Show the price when you click on the value inside the Luggage combo box.
+     */
     @FXML
     void handleSeatLuggageCbox(ActionEvent event) {
-        //SHOW DETAILS ABOUT THE PRICE OFD THE LUGGAGE
+
         double price = 0;
         String luggage = seatLuggageCbox.getValue();
 
@@ -265,7 +315,7 @@ public class MainFormController implements Initializable {
             price = 0;
         }
 
-        //display
+        //display in format
         NumberFormat formatter = new DecimalFormat("#0.00");
         String priceStr = String.valueOf(formatter.format(price));
         seatLuggageShow.setText(priceStr);
@@ -281,22 +331,26 @@ public class MainFormController implements Initializable {
             JOptionPane.showMessageDialog(null, "There are still empty fields!");
             System.out.println("Missing Fields");
 
-        }else if(seatLuggageCbox.getSelectionModel().getSelectedItem().isEmpty()
-                || discountCbox.getSelectionModel().getSelectedItem().isEmpty()){
-            
+        } else if (seatLuggageCbox.getSelectionModel().getSelectedItem().isEmpty()
+                || discountCbox.getSelectionModel().getSelectedItem().isEmpty()) {
+
             JOptionPane.showMessageDialog(null, "Luggage/Discount are empty!");
             System.out.println("luggage or discount combobox is empty");
-        }
-        else {
-            //SEAT RESERVATION PROCESS
+        } else {
+            /**
+             * This handle the seat reservation process where in you will
+             * subtract the reserve seat number into the available number of
+             * seat in the bus.
+             */
             String bus_no = busNumberFld.getText();
             String username = nameReserveFld.getText();
             int reserve_seat_num = Integer.parseInt(reserveSeatFld.getText());
             int avail_seat_num = Integer.parseInt(availSeatFld.getText());
             int remaining_seat = avail_seat_num - reserve_seat_num;
-
             ResultSet rs;
+
             try {
+                // get the connection from the database
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bussystem", "root", "");
                 Statement stat = con.createStatement();
@@ -326,7 +380,6 @@ public class MainFormController implements Initializable {
             String total_discount_str = "";
             double total_discount = 0;
             double bus_price = 0;
-            //double total_price = bus_price * reserve_seat_num;
             double luggage_price = Double.parseDouble(seatLuggageShow.getText());
 
             if (discount_type.equalsIgnoreCase("Student") || discount_type.equalsIgnoreCase("Senior Citizen")
@@ -350,11 +403,15 @@ public class MainFormController implements Initializable {
             double overall_price_discounted = total_discount + luggage_price;
             double overall_price_woutdisc = bus_price + luggage_price;
 
+            /**
+             * This show all the data in the text area as a e-pass form
+             */
             receiptTxtArea.setText("-----------------------------E-PASS-----------------------------\n\n");
             receiptTxtArea.setText("                                     METROUTE\n\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "Bus #: \t\t\t\t\t\t" + busNumberFld.getText() + "\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "Bus Type: \t\t\t\t\t" + busTypeFld.getText() + "\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "Boarding Time: \t\t\t\t" + busTimeFld.getText() + "\n");
+            receiptTxtArea.setText(receiptTxtArea.getText() + "Boarding Date: \t\t\t\t" + homeShowDate.getText() + "\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "From: \t\t\t\t\t\tPITX" + "\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "To: \t\t\t\t\t\t\t" + busDestiFld.getText() + "\n");
             receiptTxtArea.setText(receiptTxtArea.getText() + "Seat Reserve: \t\t\t\t\t" + reserveSeatFld.getText() + " reservation for " + nameReserveFld.getText() + "\n");
@@ -368,30 +425,65 @@ public class MainFormController implements Initializable {
             receiptTxtArea.setText(receiptTxtArea.getText() + "Total Price with Discount:\t Php. " + overall_price_discounted);
             receiptTxtArea.setText(receiptTxtArea.getText() + "\nTotal Price without Discount:  Php. " + overall_price_woutdisc);
 
-            //change to recceipt pane
+            refreshBookTabTable();
+            clearFieldValue();
             tabPane.getSelectionModel().select(epassTab);
         }
 
     }
 
+    /**
+     * This will fetch the data from the table into the text fields.
+     */
     private void setCellValueFromTableToField() {
         tblBook.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
                 Schedule sched = tblBook.getItems().get(tblBook.getSelectionModel().getSelectedIndex());
                 busNumberFld.setText(sched.getBus_no());
-                busDateFld.setText(sched.getBus_date());
                 busTimeFld.setText(sched.getBus_time());
                 busTypeFld.setText(sched.getBus_type());
                 busDestiFld.setText(sched.getBus_destination());
                 busPriceFld.setText(sched.getBus_price());
                 availSeatFld.setText(sched.getBus_seat());
-
             }
-
         });
     }
+    
+    /**
+     * This will refresh the book tab table so that if you reserve
+     * a seat you can see the changes in the remaining seats.
+     */
+    public void refreshBookTabTable() {
 
+        oblist_schedule.clear();
+
+        try {
+            String admin_query = "select * from bus_details";
+            PreparedStatement ps;
+            Connection con = DBConnector.getConnection();
+            ps = con.prepareStatement(admin_query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                oblist_schedule.add(new Schedule(rs.getString("bus_no"), rs.getString("bus_time"),
+                        rs.getString("bus_destination"), rs.getString("bus_seat"),
+                        rs.getString("bus_price"), rs.getString("bus_type")));
+            }
+            tblBook.setItems(oblist_schedule);
+            ps.close();
+            rs.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * This will only change the scene.
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void handleSignOutBtn(ActionEvent event) throws IOException {
         Parent changeToLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
@@ -399,6 +491,8 @@ public class MainFormController implements Initializable {
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(changeLoginScene);
         mainStage.show();
+
+        JOptionPane.showMessageDialog(null, "Bon Voyage!");
     }
 
     @FXML

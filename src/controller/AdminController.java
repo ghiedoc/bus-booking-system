@@ -51,14 +51,22 @@ public class AdminController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        /**
+         * set the visibility of the red asterisk to false so that it will become
+         * hidden on the start.
+         */
         lblU.setVisible(false);
         lblP.setVisible(false);
     }
 
+    /**
+     * fetch the data from the database if it will match the admin username and password
+     * according to the data inputted by the admin.
+     * @param event 
+     */
     @FXML
     void handleAdminBtn(ActionEvent event) {
-        //logging as admin
+        //Serve as a validator when the field are empty
         if (unameField.getText().equals("")) {
             lblU.setVisible(true);
         }

@@ -49,12 +49,20 @@ public class LoginController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        /**
+         * set the visibility of the red asterisk to false so that it will become
+         * hidden on the start.
+         */
         lblU.setVisible(false);
         lblP.setVisible(false);
 
     }
-
+    
+    /**
+     * fetch the data from the database if it will match the username and password
+     * according to the data inputted by the user.
+     * @param event 
+     */
     @FXML
     void handleLoginBtn(ActionEvent event) throws IOException {
 
@@ -79,7 +87,7 @@ public class LoginController implements Initializable {
                     mainStage.setScene(changeRegScene);
                     mainStage.show();
 
-                    JOptionPane.showMessageDialog(null, "Successfully logged in!");
+                    JOptionPane.showMessageDialog(null, "Hello " + usernameTxtField.getText() + "!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password");
                 }

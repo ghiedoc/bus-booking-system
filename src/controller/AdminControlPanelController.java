@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -207,7 +207,10 @@ public class AdminControlPanelController implements Initializable {
         setCellValueFromTableToField();
         setCellValueFromTableToFieldBusNo();
     }
-
+    
+    /**
+     * This method will allow to show the date.
+     */
     void showDate() {
         //SHOW DATE
         Date d = new Date();
@@ -215,7 +218,10 @@ public class AdminControlPanelController implements Initializable {
         showDate.setText(s.format(d));
 
     }
-
+    
+    /**
+     * This method will allow to show the time.
+     */
     void showTime() {
         //SHOW TIME
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
@@ -227,6 +233,9 @@ public class AdminControlPanelController implements Initializable {
 
     }
 
+    /**
+     * This will erase all the inputted data inside the field.
+     */
     private void clearFieldValue() {
         busNumberField.setText("");
         seatNumberField.setText("");
@@ -234,13 +243,21 @@ public class AdminControlPanelController implements Initializable {
         timeField.setText("");
         priceField.setText("");
     }
-
+    
+    /**
+     * This will erase all the inputted data inside the field.
+     */
     public void adminClearField() {
         nameFld.setText("");
         adminFld.setText("");
         passwordFld.setText("");
     }
-
+    
+    /**
+     * This will refresh the table so that if you delete
+     * or insert new admin it will refresh and you will
+     * see the changes.
+     */
     public void refreshTable() {
 
         admin_list.clear();
@@ -264,7 +281,9 @@ public class AdminControlPanelController implements Initializable {
         }
     }
 
-    //problem here
+    /**
+     * This will refresh the table on bus details.
+     */
     public void refreshBusTable() {
     
         bus_details.clear();
@@ -290,7 +309,11 @@ public class AdminControlPanelController implements Initializable {
             System.out.println(e);
         }
     }
-
+    
+    /**
+     * This will allow to insert data to the database for bus details.
+     * @param event 
+     */
     @FXML
     void handleSaveBtn(ActionEvent event) {
 
@@ -323,7 +346,11 @@ public class AdminControlPanelController implements Initializable {
             }
         }
     }
-
+    
+    /**
+     * This will allow to insert a new administrator in the database.
+     * @param event 
+     */
     @FXML
     void handleAddAdminBtn(ActionEvent event) {
         String name = nameFld.getText();
@@ -351,7 +378,10 @@ public class AdminControlPanelController implements Initializable {
         }
     }
 
-    //fetch data from table to field
+    /**
+     * This will allow to fetch the data from the table
+     * to the text fields. (administrator)
+     */
     private void setCellValueFromTableToField() {
         tblListAdmins.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
@@ -363,7 +393,11 @@ public class AdminControlPanelController implements Initializable {
 
         });
     }
-
+    
+    /**
+     * This will allow to fetch the data from the table
+     * to the text fields. (bus_details)
+     */
     private void setCellValueFromTableToFieldBusNo() {
         tblBusDetails.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
@@ -374,6 +408,9 @@ public class AdminControlPanelController implements Initializable {
         });
     }
 
+    /**
+     * This will allow you to delete an administrator account to the database.
+     */
     @FXML
     public void deleteAdmin() {
         String name = nameFld.getText();
@@ -392,7 +429,10 @@ public class AdminControlPanelController implements Initializable {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-
+    
+    /**
+     * This will allow you to delete bus details to the database.
+     */
     @FXML
     public void deleteBusDetail() {
         String bus_no = busNoFld.getText();
@@ -411,7 +451,13 @@ public class AdminControlPanelController implements Initializable {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-
+    
+    /**
+     * This will allow to switch scene from AdminControllerPanel.java
+     * into the Login.java Form
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void handleSignOutBtn(ActionEvent event) throws IOException {
 

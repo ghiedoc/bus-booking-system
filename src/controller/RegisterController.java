@@ -50,7 +50,11 @@ public class RegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+    
+    /**
+     * Allow to insert data in the registration form.
+     * @param event 
+     */
     @FXML
     void handleRegisterBtn(ActionEvent event) {
 
@@ -76,7 +80,7 @@ public class RegisterController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Successfully Registered!");
 
                 //transition to MainForm    
-                Parent changeToMain = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
+                Parent changeToMain = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
                 Scene changeMainScene = new Scene(changeToMain);
                 Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 mainStage.setScene(changeMainScene);

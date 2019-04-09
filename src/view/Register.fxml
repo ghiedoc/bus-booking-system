@@ -47,7 +47,7 @@
                </font>
             </JFXPasswordField>
             <JFXButton fx:id="registerBtn" layoutX="135.0" layoutY="276.0" onAction="#handleRegisterBtn" styleClass="btn-login" stylesheets="@../style/style.css" text="Register" />
-            <JFXButton fx:id="backBtn" layoutX="29.0" layoutY="307.0" onAction="#handleBackBtn" text="Back" />
+            <JFXButton fx:id="backBtn" layoutX="29.0" layoutY="307.0" onAction="#handleBackBtn" styleClass="btn-overall" text="Back" />
          </children>
       </AnchorPane>
    </children>

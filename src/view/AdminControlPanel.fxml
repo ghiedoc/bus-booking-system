@@ -85,7 +85,7 @@
                                     <JFXTextField fx:id="seatNumberField" focusColor="#cd0000" layoutX="460.0" layoutY="39.0" maxWidth="212.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" unFocusColor="#6153ff" />
                                     <JFXTextField fx:id="destinationField" focusColor="#cd0000" layoutX="460.0" layoutY="81.0" maxWidth="212.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" unFocusColor="#5f54ff" />
                                     <JFXDatePicker fx:id="datePicker" defaultColor="BLACK" layoutX="462.0" layoutY="126.0" prefHeight="31.0" prefWidth="212.0" />
-                                    <Button fx:id="saveBtn" layoutX="577.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="30.0" prefWidth="95.0" text="Save">
+                                    <Button fx:id="saveBtn" layoutX="577.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="30.0" prefWidth="95.0" styleClass="btn-overall" text="Save">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -124,7 +124,7 @@
                                     <TableColumn fx:id="priceCol" prefWidth="45.33349609375" text="Price" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="busDelete" layoutX="423.0" layoutY="269.0" mnemonicParsing="false" onAction="#deleteBusDetail" prefHeight="25.0" prefWidth="89.0" text="Delete" />
+                              <Button fx:id="busDelete" layoutX="423.0" layoutY="269.0" mnemonicParsing="false" onAction="#deleteBusDetail" prefHeight="25.0" prefWidth="89.0" styleClass="btn-signout" text="Delete" />
                               <TextField fx:id="busNoFld" layoutX="268.0" layoutY="270.0" />
                               <Label layoutX="213.0" layoutY="273.0" text="Bus No." textFill="WHITE">
                                  <font>
@@ -178,14 +178,14 @@
                                   <TableColumn fx:id="adminUserCol" prefWidth="136.0" text="Username" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="deleteBtn" layoutX="513.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteAdmin" text="Delete" />
+                              <Button fx:id="deleteBtn" layoutX="513.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteAdmin" styleClass="btn-signout" text="Delete" />
                            </children>
                         </AnchorPane>
                     </content>
                   </Tab>
                </tabs>
             </JFXTabPane>
-            <Button fx:id="signOutBtn" layoutX="625.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleSignOutBtn" prefHeight="35.0" prefWidth="95.0" text="Sign out">
+            <Button fx:id="signOutBtn" layoutX="625.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleSignOutBtn" prefHeight="35.0" prefWidth="95.0" styleClass="btn-signout" text="Sign out">
                <font>
                   <Font size="14.0" />
                </font>

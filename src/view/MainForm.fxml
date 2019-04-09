@@ -122,95 +122,90 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="510.0" prefWidth="905.0" style="-fx-background-color: #757de8;">
                            <children>
-                              <TableView fx:id="tblBook" layoutX="438.0" layoutY="41.0" prefHeight="216.0" prefWidth="452.0">
+                              <TableView fx:id="tblBook" layoutX="439.0" layoutY="41.0" prefHeight="216.0" prefWidth="451.0">
                                 <columns>
-                                  <TableColumn fx:id="departureColBook" prefWidth="75.0" text="Departure" />
-                                  <TableColumn fx:id="destinationColBook" prefWidth="169.0" text="Destination" />
-                                    <TableColumn fx:id="seatColBook" prefWidth="41.0" text="Seats" />
-                                    <TableColumn fx:id="typeColBook" prefWidth="91.666748046875" text="Bus Type" />
-                                    <TableColumn fx:id="priceColBook" prefWidth="74.333251953125" text="Price" />
+                                  <TableColumn fx:id="departureColBook" prefWidth="55.0" text="Time" />
+                                  <TableColumn fx:id="destinationColBook" prefWidth="154.0" text="Destination" />
+                                    <TableColumn fx:id="seatColBook" prefWidth="35.0" text="Seats" />
+                                    <TableColumn fx:id="typeColBook" prefWidth="88.0" text="Bus Type" />
+                                    <TableColumn fx:id="priceColBook" minWidth="0.0" prefWidth="118.0" text="Price" />
                                 </columns>
                               </TableView>
                               <JFXButton fx:id="okBtn" layoutX="624.0" layoutY="422.0" onAction="#handleOkBtn" prefHeight="31.0" prefWidth="125.0" styleClass="btn-login" text="Show E-Pass" />
                               <AnchorPane layoutX="32.0" layoutY="13.0" prefHeight="441.0" prefWidth="379.0" style="-fx-background-color: #ffffff;" styleClass="card">
                                  <children>
-                                    <Label layoutX="40.0" layoutY="173.0" text="To:">
+                                    <Label layoutX="40.0" layoutY="135.0" text="To:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="37.0" layoutY="97.0" text="Boarding Time:">
+                                    <Label layoutX="37.0" layoutY="59.0" text="Boarding Time:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="84.0" layoutY="246.0" text="Price:" textFill="RED">
+                                    <Label layoutX="84.0" layoutY="208.0" text="Price:" textFill="RED">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="37.0" layoutY="137.0" text="Type of Bus:">
+                                    <Label layoutX="37.0" layoutY="99.0" text="Type of Bus:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="129.0" layoutY="245.0" text="Php.">
+                                    <Label layoutX="129.0" layoutY="207.0" text="Php.">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="busTimeFld" layoutX="149.0" layoutY="86.0" maxWidth="180.0" minWidth="180.0" prefHeight="31.0" prefWidth="180.0">
+                                    <JFXTextField fx:id="busTimeFld" layoutX="149.0" layoutY="48.0" maxWidth="180.0" minWidth="180.0" prefHeight="31.0" prefWidth="180.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="busTypeFld" layoutX="149.0" layoutY="126.0" maxWidth="180.0" minWidth="156.0" prefHeight="31.0" prefWidth="180.0">
+                                    <JFXTextField fx:id="busTypeFld" layoutX="149.0" layoutY="88.0" maxWidth="180.0" minWidth="156.0" prefHeight="31.0" prefWidth="180.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="busDestiFld" layoutX="148.0" layoutY="164.0" maxWidth="182.0" minWidth="182.0" prefHeight="31.0" prefWidth="182.0">
+                                    <JFXTextField fx:id="busDestiFld" layoutX="148.0" layoutY="126.0" maxWidth="182.0" minWidth="182.0" prefHeight="31.0" prefWidth="182.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="busPriceFld" layoutX="164.0" layoutY="238.0" maxWidth="181.0" minWidth="143.0" prefHeight="31.0" prefWidth="143.0">
+                                    <JFXTextField fx:id="busPriceFld" layoutX="164.0" layoutY="200.0" maxWidth="181.0" minWidth="143.0" prefHeight="31.0" prefWidth="143.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <Label layoutX="38.0" layoutY="58.0" text="Boarding Date:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
                                     <Label layoutX="40.0" layoutY="23.0" text="Bus #:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="65.0" layoutY="322.0" text="Luggage:">
+                                    <Label layoutX="63.0" layoutY="308.0" text="Luggage:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="29.0" layoutY="364.0" text="Additional Fee:" textFill="RED">
+                                    <Label layoutX="27.0" layoutY="350.0" text="Additional Fee:" textFill="RED">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="seatLuggageShow" layoutX="196.0" layoutY="356.0" prefHeight="35.0" prefWidth="113.0">
+                                    <Label fx:id="seatLuggageShow" layoutX="194.0" layoutY="342.0" prefHeight="35.0" prefWidth="113.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXComboBox fx:id="seatLuggageCbox" layoutX="134.0" layoutY="319.0" onAction="#handleSeatLuggageCbox" prefHeight="25.0" prefWidth="186.0" />
-                                    <Label layoutX="150.0" layoutY="364.0" text="Php.">
+                                    <JFXComboBox fx:id="seatLuggageCbox" layoutX="132.0" layoutY="305.0" onAction="#handleSeatLuggageCbox" prefHeight="25.0" prefWidth="186.0" />
+                                    <Label layoutX="148.0" layoutY="350.0" text="Php.">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="13.0" layoutY="288.0" text="Additional Service" textFill="#4000a8">
+                                    <Label layoutX="11.0" layoutY="266.0" text="Additional Service" textFill="#4000a8">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -220,23 +215,18 @@
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="busDateFld" layoutX="152.0" layoutY="48.0" maxWidth="176.0" minWidth="174.0" prefHeight="31.0" prefWidth="176.0">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </JFXTextField>
-                                    <JFXComboBox fx:id="discountCbox" layoutX="154.0" layoutY="402.0" onAction="#handleDiscountCbox" prefHeight="25.0" prefWidth="163.0" />
-                                    <Label layoutX="46.0" layoutY="405.0" text="Discount Type:">
+                                    <JFXComboBox fx:id="discountCbox" layoutX="152.0" layoutY="388.0" onAction="#handleDiscountCbox" prefHeight="25.0" prefWidth="163.0" />
+                                    <Label layoutX="44.0" layoutY="391.0" text="Discount Type:">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="40.0" layoutY="211.0" text="Available Seats:">
+                                    <Label layoutX="40.0" layoutY="173.0" text="Available Seats:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="availSeatFld" layoutX="153.0" layoutY="199.0" maxWidth="172.0" minWidth="172.0" prefHeight="31.0" prefWidth="172.0">
+                                    <JFXTextField fx:id="availSeatFld" layoutX="153.0" layoutY="161.0" maxWidth="172.0" minWidth="172.0" prefHeight="31.0" prefWidth="172.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

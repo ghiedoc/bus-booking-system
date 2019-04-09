@@ -27,6 +27,30 @@ and open the template in the editor.
     -fx-pref-height: 25px;
 }
 
+.btn-login:hover{
+    -fx-background-color: #1c1b1b;
+}
+
+.btn-overall{
+    -fx-background-color: #779ecb;
+    -fx-text-fill: white;
+}
+
+.btn-overall:hover{
+    -fx-background-color: #58789e;
+    -fx-text-fill: white;
+}
+
+.btn-signout{
+    -fx-background-color:  #e62444;
+    -fx-text-fill: white;
+}
+
+.btn-signout:hover{
+    -fx-background-color:  #c23b22;
+    -fx-text-fill: white;
+}
+
 .tab{
     -fx-background-color: #e62444;
     -fx-pref-width: 200;

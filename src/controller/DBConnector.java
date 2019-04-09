@@ -11,7 +11,8 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Gillian
+ * This class allows to get a connection from the database.
+ * 
  */
 public class DBConnector {
     public static Connection getConnection() throws SQLException{

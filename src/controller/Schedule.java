@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Model class for the tables.
  */
 package controller;
 
@@ -19,9 +17,6 @@ public class Schedule {
     private String bus_type;
     private String bus_seat;
     private String bus_price;
-    
-    
-    
 
     public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price, String bus_type) {
         this.bus_no = bus_no;
@@ -31,13 +26,23 @@ public class Schedule {
         this.bus_price = bus_price;
         this.bus_type = bus_type;
     }
-    
+
+    public Schedule(String bus_no, String bus_date, String bus_time, String bus_type, String bus_destination, String bus_seat, String bus_price) {
+        this.bus_no = bus_no;
+        this.bus_date = bus_date;
+        this.bus_time = bus_time;
+        this.bus_type = bus_type;
+        this.bus_destination = bus_destination;
+        this.bus_seat = bus_seat;
+        this.bus_price = bus_price;
+    }
+
     public Schedule(String bus_no, String bus_time, String bus_destination, String bus_seat, String bus_price) {
         this.bus_no = bus_no;
         this.bus_time = bus_time;
         this.bus_destination = bus_destination;
         this.bus_seat = bus_seat;
-        this.bus_price = bus_price;   
+        this.bus_price = bus_price;
     }
 
     public Schedule(String bus_no, String bus_destination, String bus_source, String bus_time, String bus_date, String bus_type, String bus_seat, String bus_price) {
@@ -49,13 +54,11 @@ public class Schedule {
         this.bus_type = bus_type;
         this.bus_seat = bus_seat;
         this.bus_price = bus_price;
-        
-        
-        
+
     }
-    
+
     public Schedule(String bus_date) {
-        this.bus_date = bus_date;  
+        this.bus_date = bus_date;
     }
 
     public String getBus_date() {
@@ -121,7 +124,5 @@ public class Schedule {
     public void setBus_source(String bus_source) {
         this.bus_source = bus_source;
     }
-    
-    
 
 }
